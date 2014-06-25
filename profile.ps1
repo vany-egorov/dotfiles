@@ -1,3 +1,5 @@
+# chcp 65001
+chcp 1251
 Set-Location "D:\vm\debian-7.4"
 
 function to-vagrant() {
