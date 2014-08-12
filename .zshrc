@@ -36,6 +36,32 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+# docker
+function docker-run-vod-encoder() {
+  docker run -d -v /vagrant:/vagrant vod-encoder-v0.0.3 /usr/sbin/sshd -D
+}
+
+# vod-encoder
+function vod-encoder-touch() {
+  cwd=$(pwd);
+
+  cd /vagrant/cdn-origin/tmp/vod-encoder/var/lib/vod-encoder-01;
+  touch gravity_2014_06_24.done;
+  touch gravity_high_40.done;
+  touch 3380800_trailer.done;
+  touch 3380790_trailer.done;
+  ls -lah;
+
+  cd /vagrant/cdn-origin/tmp/vod-encoder/var/lib/vod-encoder-02;
+  touch gravity_2014_06_24.done;
+  touch gravity_high_40.done;
+  touch 3380800_trailer.done;
+  touch 3380790_trailer.done;
+  ls -lah;
+
+  cd $pwd;  
+}
+
 # rvm
 source ~/.rvm/scripts/rvm
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
@@ -45,22 +71,21 @@ export PYTHONIOENCODING=utf-8
 
 function to-cdn-api() {
   cd "/vagrant/cdn-api/src";
-  source "/vagrant/cdn-api/env/py/bin/activate";
+  source "/vagrant/cdn-api/env/py3.4/bin/activate";
 }
 
 function to-cdn-admin() {
   cd "/vagrant/cdn-admin/src";
-  source "/vagrant/cdn-admin/env/py/bin/activate";
+  source "/vagrant/cdn-admin/env/py3.4/bin/activate";
 }
 
 function to-cdn-supervisor() {
   cd "/vagrant/cdn-supervisor/src";
-  source "/vagrant/cdn-supervisor/env/py/bin/activate";
+  source "/vagrant/cdn-supervisor/env/py3.4/bin/activate";
 }
 
 function to-cdn-redirector() {
   cd "/vagrant/cdn-redirector";
-  source "/vagrant/cdn-redirector/env/py/bin/activate";
   export GOROOT=/vagrant/cdn-redirector/env/go;
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/cdn-redirector/env/gopath;
@@ -99,4 +124,21 @@ function to-redmine() {
   cd "/vagrant/redmine";
   rvm use ruby-2.1.1;
   rvm gemset use redmine;
+}
+
+function to-f451() {
+  cd "/vagrant/f451";
+  export GOROOT=/vagrant/f451/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/f451/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-monitoring-hls() {
+  cd "/vagrant/monitoring-hls/src";
+  export GOROOT=/vagrant/monitoring-hls/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/monitoring-hls/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  source "/vagrant/monitoring-hls/env/py3.4/bin/activate";
 }
