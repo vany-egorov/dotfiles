@@ -1,5 +1,3 @@
-# chcp 65001
-chcp 1251
 Set-Location "D:\vm\debian"
 
 function to-vagrant {
@@ -32,6 +30,18 @@ function to-docs-bradburylab-tv {
 
 function to-rm-bradburylab-tv {
   Invoke-Expression 'ssh egorov@rm.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-monitoring-hls-bradburylab-tv {
+  Invoke-Expression 'ssh egorov@monitoring-hls.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-gnc-app02-gnc-bradburylab-tv {
+  Invoke-Expression 'ssh egorov@gnc-app02.gnc.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-gnc-testing-trans00 {
+  Invoke-Expression 'ssh egorov@gnc-mon01.gnc.bradburylab.tv -p20160 -i D:\.ssh\id_rsa'
 }
 
 function run-plantuml {

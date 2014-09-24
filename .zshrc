@@ -41,6 +41,49 @@ function docker-run-vod-encoder() {
   docker run -d -v /vagrant:/vagrant vod-encoder-v0.0.3 /usr/sbin/sshd -D
 }
 
+# docker
+function docker-run-transcoder-01() {
+  docker run -d -p 27018:27017 -p 2221:22 -v /vagrant:/vagrant transcoder-v0.0.8 /usr/sbin/sshd -D
+}
+
+function docker-run-transcoder-02() {
+  docker run -d -p 27019:27017 -p 2222:22 -v /vagrant:/vagrant transcoder-v0.0.8 /usr/sbin/sshd -D
+}
+
+function docker-run-transcoders() {
+  docker-run-transcoder-01
+  docker-run-transcoder-02
+}
+
+function mongo-rm-rs0 () {
+  sudo rm -rf /srv/mongodb/rs0
+}
+
+function mongo-run() {
+  echo "stopping mongod"
+  sudo /etc/init.d/mongod stop
+  echo "\n"
+
+  echo "making mongod dbpath"
+  sudo mkdir -p /srv/mongodb/rs0
+  echo "\n"
+
+  echo "exporting locale"
+  export LC_ALL=C
+  echo "\n"
+
+  echo "starting mongod"
+  sudo mongod --port 27017 --dbpath /srv/mongodb/rs0 --bind_ip 0.0.0.0 --replSet rs0 --smallfiles --oplogSize 128
+}
+
+function to-transcoder-01() {
+  ssh vany@127.0.0.1 -p 2221
+}
+
+function to-transcoder-02() {
+  ssh vany@127.0.0.1 -p 2222
+}
+
 # vod-encoder
 function vod-encoder-touch() {
   cwd=$(pwd);
@@ -142,3 +185,30 @@ function to-monitoring-hls() {
   export PATH=$PATH:$GOPATH/bin;
   source "/vagrant/monitoring-hls/env/py3.4/bin/activate";
 }
+
+function to-monitoring-iptv() {
+  cd "/vagrant/monitoring-iptv/src";
+  export GOROOT=/vagrant/monitoring-iptv/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/monitoring-iptv/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-ttk() {
+  cd "/vagrant/ttk/src";
+  export GOROOT=/vagrant/ttk/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/ttk/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-b-stats() {
+  cd "/vagrant/b-stats";
+  source "/vagrant/b-stats/env/py2.7/bin/activate";
+}
+
+function to-transcoder-http-api() {
+  cd "/vagrant/transcoder-http-api";
+  source "/vagrant/transcoder-http-api/env/py2.7/bin/activate";
+}
+
