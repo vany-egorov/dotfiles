@@ -44,6 +44,18 @@ function to-gnc-testing-trans00 {
   Invoke-Expression 'ssh egorov@gnc-mon01.gnc.bradburylab.tv -p20160 -i D:\.ssh\id_rsa'
 }
 
+function to-bl-trans01 {
+  Invoke-Expression 'ssh egorov@172.16.0.228 -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-bl-trans02 {
+  Invoke-Expression 'ssh egorov@172.16.0.229 -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-qa-trans00-bradburylab-tv {
+  Invoke-Expression 'ssh egorov@qa-trans00.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+}
+
 function run-plantuml {
   Invoke-Expression 'java -jar D:\Downloads\plantuml.jar'
 }

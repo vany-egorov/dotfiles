@@ -112,6 +112,10 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #
 export PYTHONIOENCODING=utf-8
 
+function git-commit() {
+  git add . && git add -u && git commit -am "autocommit fix" && git push
+}
+
 function to-cdn-api() {
   cd "/vagrant/cdn-api/src";
   source "/vagrant/cdn-api/env/py3.4/bin/activate";
@@ -192,6 +196,7 @@ function to-monitoring-iptv() {
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/monitoring-iptv/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+  source "/vagrant/monitoring-iptv/env/py3.4/bin/activate";
 }
 
 function to-ttk() {
@@ -212,3 +217,7 @@ function to-transcoder-http-api() {
   source "/vagrant/transcoder-http-api/env/py2.7/bin/activate";
 }
 
+function to-transcoder-ctl() {
+  cd "/vagrant/transcoder-ctl";
+  source "/vagrant/transcoder-ctl/env/py2.7/bin/activate";
+}
