@@ -217,7 +217,28 @@ function to-transcoder-http-api() {
   source "/vagrant/transcoder-http-api/env/py2.7/bin/activate";
 }
 
+function to-transcoder-http-api-deb() {
+  cd "/vagrant/transcoder-http-api-deb";
+  deactivate;
+}
+
 function to-transcoder-ctl() {
   cd "/vagrant/transcoder-ctl";
   source "/vagrant/transcoder-ctl/env/py2.7/bin/activate";
 }
+
+function to-transcoder-salt() {
+  cd "/vagrant/transcoder-salt";
+  deactivate;
+}
+
+function to-transcoder-schema() {
+  cd "/vagrant/transcoder-schema";
+  deactivate;
+}
+
+function to-transcoder-http-api-zabbix() {
+  cd "/vagrant/transcoder-http-api-zabbix";
+  source "/vagrant/transcoder-http-api-zabbix/env/py2.7/bin/activate";
+}
+
