@@ -224,7 +224,7 @@ function to-transcoder-etcd() {
   cd "/vagrant/transcoder-etcd";
   export GOROOT=/vagrant/transcoder-etcd/env/go;
   export PATH=$PATH:$GOROOT/bin;
-  export GOPATH=/vagrant/transcoder-etcd/gopath;
+  export GOPATH=/vagrant/transcoder-etcd/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
 }
 
