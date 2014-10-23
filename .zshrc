@@ -244,9 +244,19 @@ function to-transcoder-http-api-deb() {
   deactivate;
 }
 
+function to-transcoder-doc() {
+  cd "/vagrant/transcoder-doc";
+  source "/vagrant/transcoder-doc/env/py3.4/bin/activate";
+}
+
 function to-transcoder-ctl() {
   cd "/vagrant/transcoder-ctl";
   source "/vagrant/transcoder-ctl/env/py2.7/bin/activate";
+}
+
+function to-transcoder-ctl-deb() {
+  cd "/vagrant/transcoder-ctl-deb";
+  deactivate;
 }
 
 function to-transcoder-salt() {
