@@ -207,9 +207,31 @@ function to-ttk() {
   export PATH=$PATH:$GOPATH/bin;
 }
 
+function to-etcd() {
+  cd "/home/vany/etcd-0.4.6";
+  export GOROOT=/home/vany/etcd-0.4.6;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/home/vany/etcd-0.4.6/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
 function to-b-stats() {
   cd "/vagrant/b-stats";
   source "/vagrant/b-stats/env/py2.7/bin/activate";
+}
+
+function to-transcoder-etcd() {
+  cd "/vagrant/transcoder-etcd";
+  export GOROOT=/vagrant/transcoder-etcd/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/transcoder-etcd/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-transcoder-doc() {
+  cd "/vagrant/transcoder-doc";
+  source "/vagrant/transcoder-doc/env/py3.4/bin/activate";
+  cd "/vagrant/transcoder-doc/doc";
 }
 
 function to-transcoder-http-api() {
