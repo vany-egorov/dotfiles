@@ -44,6 +44,14 @@ function to-gnc-testing-trans00 {
   Invoke-Expression 'ssh egorov@gnc-mon01.gnc.bradburylab.tv -p20160 -i D:\.ssh\id_rsa'
 }
 
+function to-bbl-ott-node01-01-77-htv-mts-ru {
+  Invoke-Expression 'ssh egorov@10.223.229.233 -i D:\.ssh\id_rsa' 
+}
+
+function to-bbl-ott-node02-01-77-htv-mts-ru {
+  Invoke-Expression 'ssh egorov@10.223.228.234 -i D:\.ssh\id_rsa'
+}
+
 function to-bl-trans01 {
   Invoke-Expression 'ssh egorov@172.16.0.228 -p 2222 -i D:\.ssh\id_rsa'
 }
@@ -54,6 +62,14 @@ function to-bl-trans02 {
 
 function to-qa-trans00-bradburylab-tv {
   Invoke-Expression 'ssh egorov@qa-trans00.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+}
+
+function to-gnc-mon01-gnc-bradburylab-tv-forward-port {
+  Invoke-Expression 'ssh -N -f -L 8001:10.253.99.103:80 egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
+}
+
+function to-gnc-mon01-gnc-bradburylab-tv {
+  Invoke-Expression 'ssh egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
 }
 
 function run-plantuml {

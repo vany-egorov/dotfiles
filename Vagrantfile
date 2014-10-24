@@ -15,7 +15,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "forwarded_port", guest: 80, host: 1080
   config.vm.network "forwarded_port", guest: 1488, host: 1488
-  config.vm.network "forwarded_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 4000, host: 4000
+  config.vm.network "forwarded_port", guest: 4001, host: 4001
+  config.vm.network "forwarded_port", guest: 4002, host: 4002
+  config.vm.network "forwarded_port", guest: 4003, host: 4003
   config.vm.network "forwarded_port", guest: 5432, host: 5433
   config.vm.network "forwarded_port", guest: 6379, host: 6379
   config.vm.network "forwarded_port", guest: 8000, host: 8000
