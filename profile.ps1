@@ -9,11 +9,13 @@ function to-vagrant-as-root {
 }
 
 function to-bbl-cdn-origin-vod01-01-77 {
-  Invoke-Expression 'ssh egorov@10.223.246.215 -p 22 -i D:\.ssh\id_rsa'
+  # Invoke-Expression 'ssh egorov@10.223.246.215 -p 22 -i D:\.ssh\id_rsa'
+  Invoke-Expression 'ssh egorov@10.223.229.215 -p 22 -i D:\.ssh\id_rsa'
 }
 
 function to-bbl-cdn-origin-vod02-01-77 {
-  Invoke-Expression 'ssh egorov@10.223.246.216 -p 22 -i D:\.ssh\id_rsa'
+  # Invoke-Expression 'ssh egorov@10.223.246.216 -p 22 -i D:\.ssh\id_rsa'
+  Invoke-Expression 'ssh egorov@10.223.229.216 -p 22 -i D:\.ssh\id_rsa'
 }
 
 function to-bbl-cdn-midorigin01-01-78 {
@@ -22,6 +24,10 @@ function to-bbl-cdn-midorigin01-01-78 {
 
 function to-bbl-cdn-midorigin03-01-78 {
   Invoke-Expression 'ssh egorov@10.223.11.206 -p 22 -i D:\.ssh\id_rsa'
+}
+
+function to-bbl-cdn-fe01-01-77 {
+  Invoke-Expression 'ssh egorov@cdn.mts.bradburylab.tv -p 22 -i D:\.ssh\id_rsa'
 }
 
 function to-docs-bradburylab-tv {
@@ -64,14 +70,19 @@ function to-qa-trans00-bradburylab-tv {
   Invoke-Expression 'ssh egorov@qa-trans00.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
 }
 
-function to-gnc-mon01-gnc-bradburylab-tv-forward-port {
-  Invoke-Expression 'ssh -N -f -L 8001:10.253.99.103:80 egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
+function to-gnc-mon01-gnc-bradburylab-tv-forward-port-prod {
+  Invoke-Expression 'ssh -N -f -L 8881:10.253.99.103:80 egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
 }
+
+function to-gnc-mon01-gnc-bradburylab-tv-forward-port-test {
+  Invoke-Expression 'ssh -N -f -L 8882:10.253.99.160:80 egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
+}
+
 
 function to-gnc-mon01-gnc-bradburylab-tv {
   Invoke-Expression 'ssh egorov@gnc-mon01.gnc.bradburylab.tv -p 2222'
 }
 
 function run-plantuml {
-  Invoke-Expression 'java -jar D:\Downloads\plantuml.jar'
+  Invoke-Expression 'java -jar D:\Download\plantuml.jar'
 }
