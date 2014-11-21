@@ -274,3 +274,16 @@ function to-transcoder-http-api-zabbix() {
   source "/vagrant/transcoder-http-api-zabbix/env/py2.7/bin/activate";
 }
 
+function to-docs() {
+  cd "/vagrant/docs/sphinx";
+  source "/vagrant/docs/env/py3.4/bin/activate";
+}
+
+function to-drm() {
+  cd "/vagrant/drm/src";
+  export GOROOT=/vagrant/drm/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/drm/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
