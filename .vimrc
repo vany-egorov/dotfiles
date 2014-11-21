@@ -18,6 +18,9 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-orgmode'
 Plugin 'speeddating.vim'
 Plugin 'The-NERD-tree'
+Plugin 'fatih/vim-go'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
