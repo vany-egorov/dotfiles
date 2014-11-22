@@ -1,18 +1,10 @@
-:syntax on
+" <vundle> --------------------------------------------------------------------
+set nocompatible
+filetype off
 
-set backspace=indent,eol,start
-
-" vundle ------------------------------------------------------------------------
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'vim-orgmode'
@@ -21,20 +13,57 @@ Plugin 'The-NERD-tree'
 Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'terryma/vim-multiple-cursors'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-" ---------------------------------------------------------------------- vundle
+call vundle#end()
+filetype plugin indent on
+" ------------------------------------------------------------------- </vundle>
+
+:syntax on
+
+colorscheme railscasts
+
+set paste
+set wrap
+" set backspace=indent,eol,start
+set t_Co=256
+
+if has('statusline')
+	set laststatus=2
+
+	set statusline=%<%f\
+	set statusline+=%w%h%m%r
+	set statusline+=%{fugitive#statusline()}
+	set statusline+=\ [%{&ff}/%Y]
+	set statusline+=\ [%{getcwd()}]
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+	let g:syntastic_enable_signs=1
+	set statusline+=%=%-14.(%l,%c%V%)\ %p%%
+endif
+
+let NERDTreeShowHidden=1
+
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-tab>'
+
+let g:airline_theme='bubblegum'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
 
