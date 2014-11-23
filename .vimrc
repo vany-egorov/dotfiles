@@ -1,4 +1,4 @@
-" <vundle> --------------------------------------------------------------------
+syntax on
 set nocompatible
 filetype off
 
@@ -6,6 +6,14 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:UltiSnipsEditSplit="vertical"
 
 Plugin 'vim-orgmode'
 Plugin 'speeddating.vim'
@@ -14,23 +22,18 @@ Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 filetype plugin indent on
-" ------------------------------------------------------------------- </vundle>
-
-:syntax on
 
 colorscheme railscasts
 
-set paste
+" set paste
 set wrap
-" set backspace=indent,eol,start
+set backspace=indent,eol,start
 set t_Co=256
 
 if has('statusline')
@@ -53,9 +56,12 @@ let NERDTreeShowHidden=1
 let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
 
+let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger='<tab>'
 let g:UltiSnipsJumpForwardTrigger='<tab>'
-let g:UltiSnipsJumpBackwardTrigger='<S-tab>'
+let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
+autocmd Filetype python :UltiSnipsAddFiletypes python
 
 let g:airline_theme='bubblegum'
 let g:airline#extensions#tabline#enabled = 1
@@ -65,5 +71,3 @@ map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
-
-
