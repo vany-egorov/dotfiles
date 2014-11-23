@@ -8,13 +8,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-let g:UltiSnipsEditSplit="vertical"
-
 Plugin 'vim-orgmode'
 Plugin 'speeddating.vim'
 Plugin 'The-NERD-tree'
@@ -23,8 +16,11 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Lokaltog/vim-easymotion'
+Plugin 'Localtog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()
 filetype plugin indent on
@@ -61,7 +57,6 @@ let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger='<tab>'
 let g:UltiSnipsJumpForwardTrigger='<tab>'
 let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
-autocmd Filetype python :UltiSnipsAddFiletypes python
 
 let g:airline_theme='bubblegum'
 let g:airline#extensions#tabline#enabled = 1
