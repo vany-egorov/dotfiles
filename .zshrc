@@ -36,6 +36,12 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi
+
 # docker
 function docker-run-vod-encoder() {
   docker run -d -v /vagrant:/vagrant vod-encoder-v0.0.3 /usr/sbin/sshd -D
@@ -167,10 +173,27 @@ function to-cdn-log-parser() {
   export PATH=$PATH:$GOPATH/bin;
 }
 
+function to-cdn-asset-descrambler() {
+  cd "/vagrant/cdn-asset-descrambler";
+  export GOROOT=/vagrant/cdn-asset-descrambler/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn-asset-descrambler/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
 function to-redmine() {
   cd "/vagrant/redmine";
   rvm use ruby-2.1.1;
   rvm gemset use redmine;
+}
+
+function to-drm() {
+  cd "/vagrant/drm/src";
+  source "/vagrant/drm/env/py3.4/bin/activate";
+  export GOROOT=/vagrant/drm/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/drm/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
 }
 
 function to-f451() {
@@ -277,13 +300,5 @@ function to-transcoder-http-api-zabbix() {
 function to-docs() {
   cd "/vagrant/docs/sphinx";
   source "/vagrant/docs/env/py3.4/bin/activate";
-}
-
-function to-drm() {
-  cd "/vagrant/drm/src";
-  export GOROOT=/vagrant/drm/env/go;
-  export PATH=$PATH:$GOROOT/bin;
-  export GOPATH=/vagrant/drm/env/gopath;
-  export PATH=$PATH:$GOPATH/bin;
 }
 
