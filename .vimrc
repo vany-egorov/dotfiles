@@ -21,9 +21,22 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'amiorin/vim-project'
+Plugin 'kien/ctrlp.vim'
 
 call vundle#end()
 filetype plugin indent on
+
+let g:project_enable_welcome = 1
+let g:project_use_nerdtree = 1
+
+set rtp+=~/.vim/bundle/vim-project
+
+call project#rc("/vagrant")
+
+Project '/vagrant/drm'           , 'bbl-drm'
+Project '/vagrant/monitoring-hls', 'bbl-monitoring-hls'
+
 
 colorscheme railscasts
 
