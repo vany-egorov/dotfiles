@@ -16,13 +16,19 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Localtog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'nathanaelkane/vim-indent-guides'
+" Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Yggdroot/indentLine'
 Plugin 'amiorin/vim-project'
 Plugin 'kien/ctrlp.vim'
+Plugin 'gkz/vim-ls'
+Plugin 'aklt/plantuml-syntax'
+" Plugin 'Rykka/riv.vim'
+" Plugin 'Rykka/clickable.vim'
+" Plugin 'Rykka/os.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -34,16 +40,26 @@ set rtp+=~/.vim/bundle/vim-project
 
 call project#rc("/vagrant")
 
-Project '/vagrant/drm'           , 'bbl-drm'
-Project '/vagrant/monitoring-hls', 'bbl-monitoring-hls'
+Project '/vagrant/drm'                , 'bbl-drm'
+Project '/vagrant/monitoring-hls'     , 'bbl-monitoring-hls'
+Project '/vagrant/docs'               , 'bbl-docs'
+Project '/vagrant/transcoder-http-api', 'bbl-transcoder-http-api'
+Project '/vagrant/transcoder-ctl'     , 'bbl-transcoder-ctl'
+Project '/vagrant/cdn-api'            , 'bbl-cdn-api'
+Project '/vagrant/cdn-admin'          , 'bbl-cdn-admin'
+Project '/vagrant/cdn-supervisor'     , 'bbl-cdn-supervisor'
+Project '/vagrant/cdn-redirecor'      , 'bbl-cdn-redirecor'
+Project '/vagrant/cdn-origin'         , 'bbl-cdn-origin'
+Project '/vagrant/cdn-node'           , 'bbl-cdn-node'
 
 
 colorscheme railscasts
 
 " set paste
-set wrap
+set nowrap
 set backspace=indent,eol,start
 set t_Co=256
+set number
 
 if has('statusline')
 	set laststatus=2
@@ -79,3 +95,10 @@ map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
+map <Esc><Esc> :w<CR>
+
+" map <C-a> <ESC>^
+" map <C-e> <ESC>$
+" imap <silent> <C-a> <ESC>0i
+" imap <silent> <C-e> <ESC>A
+
