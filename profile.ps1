@@ -1,7 +1,7 @@
 Set-Location "D:\vm\debian"
 
 function to-vagrant {
-  Invoke-Expression 'ssh vany@127.0.0.1 -p 2222 -i D:\.ssh\id_rsa'
+  Invoke-Expression 'ssh egorov@127.0.0.1 -p 2222 -i D:\.ssh\id_rsa'
 }
 
 function to-vagrant-as-root {
@@ -38,8 +38,8 @@ function to-rm-bradburylab-tv {
   Invoke-Expression 'ssh egorov@rm.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
 }
 
-function to-monitoring-hls-bradburylab-tv {
-  Invoke-Expression 'ssh egorov@monitoring-hls.bradburylab.tv -p 2222 -i D:\.ssh\id_rsa'
+function to-monitoring-hls-int-bradburylab-tv {
+  Invoke-Expression 'ssh egorov@172.16.0.118 -p 2222 -i D:\.ssh\id_rsa'
 }
 
 function to-gnc-app02-gnc-bradburylab-tv {
@@ -84,5 +84,5 @@ function to-gnc-mon01-gnc-bradburylab-tv {
 }
 
 function run-plantuml {
-  Invoke-Expression 'java -jar D:\Download\plantuml.jar'
+  Invoke-Expression 'java -jar D:\Downloads\plantuml.jar -v -charset UTF-8 -gui'
 }
