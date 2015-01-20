@@ -153,6 +153,14 @@ function to-cdn-origin() {
   export PATH=$PATH:$GOPATH/bin;
 }
 
+function to-cdn-asset-descrambler() {
+  cd "/vagrant/cdn-asset-descrambler/src";
+  export GOROOT=/vagrant/cdn-asset-descrambler/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn-asset-descrambler/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
 function to-cdn-node() {
   cd "/vagrant/cdn-node/src";
   export GOROOT=/vagrant/cdn-node/env/go;
@@ -171,7 +179,7 @@ function to-cdn-log-parser() {
 
 function to-redmine() {
   cd "/vagrant/redmine";
-  rvm use ruby-2.1.1;
+  rvm use ruby-2.1.5;
   rvm gemset use redmine;
 }
 
@@ -287,6 +295,7 @@ function to-cas() {
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/cas/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/cas/bin;
 }
 
 function to-oss-proxy() {
@@ -295,5 +304,10 @@ function to-oss-proxy() {
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/oss-proxy/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-dproxystv() {
+  cd "/vagrant/dproxystv";
+  source "/vagrant/dproxystv/env/py/bin/activate";
 }
 
