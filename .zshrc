@@ -128,6 +128,14 @@ function to-cdn-admin() {
   source "/vagrant/cdn-admin/env/py3.4/bin/activate";
 }
 
+function to-cdn-ui() {
+  cd "/vagrant/cdn-ui/src";
+  export GOROOT=/vagrant/cdn-ui/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn-ui/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
 function to-cdn-supervisor() {
   cd "/vagrant/cdn-supervisor/src";
   source "/vagrant/cdn-supervisor/env/py3.4/bin/activate";
