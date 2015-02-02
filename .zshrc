@@ -1,3 +1,6 @@
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa
+
 # Set up the prompt
 autoload -Uz compinit compinit
 autoload -Uz promptinit
@@ -126,6 +129,8 @@ function to-cdn-api() {
 function to-cdn-admin() {
   cd "/vagrant/cdn-admin/src";
   source "/vagrant/cdn-admin/env/py3.4/bin/activate";
+  rvm use ruby-2.1.5;
+  rvm gemset use cdn-admin;
 }
 
 function to-cdn-ui() {
@@ -166,6 +171,14 @@ function to-cdn-asset-descrambler() {
   export GOROOT=/vagrant/cdn-asset-descrambler/env/go;
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/cdn-asset-descrambler/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+}
+
+function to-cdn-asset-manifester() {
+  cd "/vagrant/cdn-asset-manifester/src";
+  export GOROOT=/vagrant/cdn-asset-manifester/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn-asset-manifester/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
 }
 
@@ -317,5 +330,22 @@ function to-oss-proxy() {
 function to-dproxystv() {
   cd "/vagrant/dproxystv";
   source "/vagrant/dproxystv/env/py/bin/activate";
+}
+
+function to-shifu() {
+  cd "/vagrant/shifu/src";
+  export GOROOT=/vagrant/shifu/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/shifu/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/shifu/bin;
+}
+
+function to-etcd-master() {
+  cd "/home/egorov/etcd-master";
+  export GOROOT=/home/egorov/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/home/vany/etcd-master/gopath;
+  export PATH=$PATH:$GOPATH/bin;
 }
 
