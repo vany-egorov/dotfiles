@@ -64,13 +64,13 @@ function mongo-rm-rs0 () {
   sudo rm -rf /srv/mongodb/rs0
 }
 
-function mongo-run() {
+function mongo-run-0() {
   echo "stopping mongod"
   sudo /etc/init.d/mongod stop
   echo "\n"
 
   echo "making mongod dbpath"
-  sudo mkdir -p /srv/mongodb/rs0
+  sudo mkdir -p /srv/mongodb/rs0-0
   echo "\n"
 
   echo "exporting locale"
@@ -78,7 +78,41 @@ function mongo-run() {
   echo "\n"
 
   echo "starting mongod"
-  sudo mongod --port 27017 --dbpath /srv/mongodb/rs0 --bind_ip 0.0.0.0 --replSet rs0 --smallfiles --oplogSize 128
+  sudo mongod --port 27017 --dbpath /srv/mongodb/rs0-0 --bind_ip 0.0.0.0 --replSet rs0 --smallfiles --oplogSize 128
+}
+
+function mongo-run-1() {
+  echo "stopping mongod"
+  sudo /etc/init.d/mongod stop
+  echo "\n"
+
+  echo "making mongod dbpath"
+  sudo mkdir -p /srv/mongodb/rs0-1
+  echo "\n"
+
+  echo "exporting locale"
+  export LC_ALL=C
+  echo "\n"
+
+  echo "starting mongod"
+  sudo mongod --port 27018 --dbpath /srv/mongodb/rs0-1 --bind_ip 0.0.0.0 --replSet rs0 --smallfiles --oplogSize 128
+}
+
+function mongo-run-2() {
+  echo "stopping mongod"
+  sudo /etc/init.d/mongod stop
+  echo "\n"
+
+  echo "making mongod dbpath"
+  sudo mkdir -p /srv/mongodb/rs0-2
+  echo "\n"
+
+  echo "exporting locale"
+  export LC_ALL=C
+  echo "\n"
+
+  echo "starting mongod"
+  sudo mongod --port 27019 --dbpath /srv/mongodb/rs0-2 --bind_ip 0.0.0.0 --replSet rs0 --smallfiles --oplogSize 128
 }
 
 function to-transcoder-01() {
@@ -200,8 +234,10 @@ function to-cdn-log-parser() {
 
 function to-redmine() {
   cd "/vagrant/redmine";
-  rvm use ruby-2.1.5;
-  rvm gemset use redmine;
+  rvm use ruby-1.9.3;
+  rvm gemset use redmine-1.9.3;
+  # rake resque:scheduler
+  # QUEUES=* rake resque:work
 }
 
 function to-f451() {
@@ -309,6 +345,8 @@ function to-docs() {
   cd "/vagrant/docs/sphinx";
   source "/vagrant/docs/env/py3.4/bin/activate";
 }
+function to-docs-cdn() { to-docs; cd "/vagrant/docs/sphinx/source/subdocs/mts/cdn"; }
+function to-docs-cas() { to-docs; cd "/vagrant/docs/sphinx/source/subdocs/limbo/cas"; }
 
 function to-cas() {
   cd "/vagrant/cas/src";
@@ -317,6 +355,15 @@ function to-cas() {
   export GOPATH=/vagrant/cas/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
   export PATH=$PATH:/vagrant/cas/bin;
+}
+
+function to-enc-api() {
+  cd "/vagrant/enc-api/src";
+  export GOROOT=/vagrant/enc-api/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/enc-api/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/enc-api/bin;
 }
 
 function to-oss-proxy() {
