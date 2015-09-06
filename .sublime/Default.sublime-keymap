@@ -1,0 +1,46 @@
+[
+  {
+    "keys": ["f1"],
+    "command": "dired",
+    "args": {
+      "immediate": true,
+      "single_pane": true,
+      "other_group": "right",
+      "project": true
+    }
+  },
+  {
+    "keys": ["f8"],
+    "command": "dired_delete", "args": {"trash": true},
+    "context": [
+      { "key": "selector", "operator": "equal", "operand": "text.dired" },
+      { "key": "setting.dired_rename_mode", "operand": false }
+    ]
+  },
+  {
+    "keys": ["shift+f6"],
+    "command": "dired_rename",
+    "context": [
+      { "key": "selector", "operator": "equal", "operand": "text.dired" },
+      { "key": "setting.dired_rename_mode", "operand": false }
+    ]
+  },
+  {
+      "keys": ["f7"],
+      "command": "dired_create",
+      "args": { "which": "directory" },
+      "context": [
+        { "key": "selector", "operator": "equal", "operand": "text.dired" },
+        { "key": "setting.dired_rename_mode", "operand": false }
+      ]
+  },
+  {
+      "keys": ["shift+f4"],
+      "command": "dired_create",
+      "args": { "which": "file" },
+      "context": [
+        { "key": "selector", "operator": "equal", "operand": "text.dired" },
+        { "key": "setting.dired_rename_mode", "operand": false }
+      ]
+  },
+]

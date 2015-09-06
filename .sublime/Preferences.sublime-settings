@@ -1,0 +1,18 @@
+{
+  "color_scheme": "Packages/Color Scheme - Default/Twilight.tmTheme",
+  "font_face": "Consolas",
+  "font_options":
+  [
+    "directwrite"
+  ],
+  "font_size": 15,
+  "ignored_packages":
+  [
+    "RestructuredText",
+    "Vintage",
+    "Makefile"
+  ],
+  "tab_size": 2,
+  "theme": "Soda Dark 3.sublime-theme",
+  "translate_tabs_to_spaces": true
+}

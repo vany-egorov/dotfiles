@@ -156,15 +156,23 @@ function git-commit() {
 }
 
 function to-cdn-api() {
-  cd "/vagrant/cdn-api/src";
+  cd "/vagrant/cdn-api";
   source "/vagrant/cdn-api/env/py3.4/bin/activate";
 }
 
+function to-cdn-api-bin-deb() {
+  cd "/vagrant/cdn-api-bin-deb";
+}
+
 function to-cdn-admin() {
-  cd "/vagrant/cdn-admin/src";
+  cd "/vagrant/cdn-admin";
   source "/vagrant/cdn-admin/env/py3.4/bin/activate";
   rvm use ruby-2.1.5;
   rvm gemset use cdn-admin;
+}
+
+function to-cdn-admin-bin-deb() {
+  cd "/vagrant/cdn-admin-bin-deb";
 }
 
 function to-cdn-ui() {
@@ -176,8 +184,12 @@ function to-cdn-ui() {
 }
 
 function to-cdn-supervisor() {
-  cd "/vagrant/cdn-supervisor/src";
+  cd "/vagrant/cdn-supervisor";
   source "/vagrant/cdn-supervisor/env/py3.4/bin/activate";
+}
+
+function to-cdn-supervisor-bin-deb() {
+  cd "/vagrant/cdn-supervisor-bin-deb";
 }
 
 function to-cdn-redirector() {
@@ -198,6 +210,7 @@ function to-cdn-origin() {
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/cdn-origin/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/cdn-origin/bin;
 }
 
 function to-cdn-asset-descrambler() {
@@ -222,6 +235,16 @@ function to-cdn-node() {
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/cdn-node/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/cdn-node/bin;
+}
+
+function to-cdn() {
+  cd "/vagrant/cdn/src";
+  export GOROOT=/vagrant/cdn/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/cdn/bin;
 }
 
 function to-cdn-log-parser() {
@@ -234,8 +257,9 @@ function to-cdn-log-parser() {
 
 function to-redmine() {
   cd "/vagrant/redmine";
-  rvm use ruby-1.9.3;
-  rvm gemset use redmine-1.9.3;
+  rvm use ruby-2.1.5;
+  rvm gemset use redmine-2.6-stable;
+  # rvm gemset use redmine-3.0-stable;
   # rake resque:scheduler
   # QUEUES=* rake resque:work
 }
@@ -295,10 +319,12 @@ function to-transcoder-etcd() {
   export PATH=$PATH:$GOPATH/bin;
 }
 
-function to-transcoder-doc() {
-  cd "/vagrant/transcoder-doc";
-  source "/vagrant/transcoder-doc/env/py3.4/bin/activate";
-  cd "/vagrant/transcoder-doc/doc";
+function to-transcoder-ctl-test() {
+  cd "/vagrant/transcoder-ctl-test";
+  export GOROOT=/vagrant/transcoder-ctl-test/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/transcoder-ctl-test/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
 }
 
 function to-transcoder-http-api() {
@@ -309,11 +335,6 @@ function to-transcoder-http-api() {
 function to-transcoder-http-api-deb() {
   cd "/vagrant/transcoder-http-api-deb";
   deactivate;
-}
-
-function to-transcoder-doc() {
-  cd "/vagrant/transcoder-doc";
-  source "/vagrant/transcoder-doc/env/py3.4/bin/activate";
 }
 
 function to-transcoder-ctl() {
@@ -347,6 +368,7 @@ function to-docs() {
 }
 function to-docs-cdn() { to-docs; cd "/vagrant/docs/sphinx/source/subdocs/mts/cdn"; }
 function to-docs-cas() { to-docs; cd "/vagrant/docs/sphinx/source/subdocs/limbo/cas"; }
+function to-docs-trans-1.X() { to-docs; cd "/vagrant/docs/sphinx/source/subdocs/transcoder/1.X"; }
 
 function to-cas() {
   cd "/vagrant/cas/src";
@@ -357,13 +379,22 @@ function to-cas() {
   export PATH=$PATH:/vagrant/cas/bin;
 }
 
-function to-enc-api() {
-  cd "/vagrant/enc-api/src";
-  export GOROOT=/vagrant/enc-api/env/go;
+function to-enc-poller() {
+  cd "/vagrant/enc-poller/src";
+  export GOROOT=/vagrant/enc-poller/env/go;
   export PATH=$PATH:$GOROOT/bin;
-  export GOPATH=/vagrant/enc-api/env/gopath;
+  export GOPATH=/vagrant/enc-poller/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
-  export PATH=$PATH:/vagrant/enc-api/bin;
+  export PATH=$PATH:/vagrant/enc-poller/bin;
+}
+
+function to-swagger-ui() {
+  cd /vagrant/swagger-ui/src;
+  export GOROOT=/vagrant/swagger-ui/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/swagger-ui/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/swagger-ui/bin;
 }
 
 function to-oss-proxy() {
