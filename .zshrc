@@ -41,6 +41,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 stty -ixon
 
+alias maek=make
+
 # docker
 function docker-run-vod-encoder() {
   docker run -d -v /vagrant:/vagrant vod-encoder-v0.0.3 /usr/sbin/sshd -D
@@ -155,9 +157,32 @@ function git-commit() {
   git add . && git add -u && git commit -am "autocommit fix" && git push
 }
 
+function to-asyncio() {
+  cd "/vagrant/asyncio/src";
+  source "/vagrant/asyncio/env/py3.4/bin/activate";
+}
+
 function to-cdn-api() {
   cd "/vagrant/cdn-api";
   source "/vagrant/cdn-api/env/py3.4/bin/activate";
+}
+
+function to-cdn-api-migrate() {
+  cd "/vagrant/cdn-api-migrate/src";
+  source "/vagrant/cdn-api-migrate/env/py3.4/bin/activate";
+}
+
+function to-cdn-api-ldap() {
+  cd "/vagrant/cdn-api-ldap/src";
+  export GOROOT=/vagrant/cdn-api-ldap/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/cdn-api-ldap/env/gopath;
+  export PATH=$PATH:$GOPATH/bin; 
+  export PATH=$PATH:/vagrant/cdn-api-ldap/bin;
+}
+
+function to-cdn-api-deb() {
+  cd "/vagrant/cdn-api-deb";
 }
 
 function to-cdn-api-bin-deb() {
@@ -169,6 +194,10 @@ function to-cdn-admin() {
   source "/vagrant/cdn-admin/env/py3.4/bin/activate";
   rvm use ruby-2.1.5;
   rvm gemset use cdn-admin;
+}
+
+function to-cdn-admin-deb() {
+  cd "/vagrant/cdn-admin-deb";
 }
 
 function to-cdn-admin-bin-deb() {
@@ -186,6 +215,10 @@ function to-cdn-ui() {
 function to-cdn-supervisor() {
   cd "/vagrant/cdn-supervisor";
   source "/vagrant/cdn-supervisor/env/py3.4/bin/activate";
+}
+
+function to-cdn-supervisor-deb() {
+  cd "/vagrant/cdn-supervisor-deb";
 }
 
 function to-cdn-supervisor-bin-deb() {
@@ -258,18 +291,54 @@ function to-cdn-log-parser() {
 function to-redmine() {
   cd "/vagrant/redmine";
   rvm use ruby-2.1.5;
-  rvm gemset use redmine-2.6-stable;
-  # rvm gemset use redmine-3.0-stable;
+  # rvm gemset use redmine-2.6-stable;
+  rvm gemset use redmine-3.0-stable;
   # rake resque:scheduler
   # QUEUES=* rake resque:work
 }
 
+function to-bbl-streamer() {
+  cd "/vagrant/bbl-streamer";
+}
+
+function bbl-streamer-rsync {
+	rsync \
+		-avz --info=progress2 \
+		-e "ssh -p 2222" \
+		/vagrant/bbl-streamer \
+		--exclude '.git' \
+		--exclude 'env' \
+		--exclude 'bin' \
+		--exclude 'log' \
+		--exclude '*.fix' \
+		egorov@172.16.33.151:/home/egorov
+}
+
 function to-f451() {
-  cd "/vagrant/f451";
+  cd "/vagrant/f451/src";
   export GOROOT=/vagrant/f451/env/go;
   export PATH=$PATH:$GOROOT/bin;
   export GOPATH=/vagrant/f451/env/gopath;
   export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/f451/bin;
+}
+
+function to-f451-server() {
+  cd "/vagrant/f451-server";
+  export GOROOT=/vagrant/f451-server/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/f451-server/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/f451-server/bin;
+}
+
+function to-f451-agent() {
+  cd "/vagrant/f451-agent";
+  export GOROOT=/vagrant/f451-agent/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/f451-agent/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/f451-agent/bin;
 }
 
 function to-monitoring-hls() {
@@ -360,6 +429,19 @@ function to-transcoder-schema() {
 function to-transcoder-http-api-zabbix() {
   cd "/vagrant/transcoder-http-api-zabbix";
   source "/vagrant/transcoder-http-api-zabbix/env/py2.7/bin/activate";
+}
+
+function to-transcoder-test() {
+  cd "/vagrant/transcoder-test";
+  export GOROOT=/vagrant/transcoder-test/env/go;
+  export PATH=$PATH:$GOROOT/bin;
+  export GOPATH=/vagrant/transcoder-test/env/gopath;
+  export PATH=$PATH:$GOPATH/bin;
+  export PATH=$PATH:/vagrant/transcoder-test/bin;
+}
+
+function to-transcoder-ffmpeg() {
+  cd "/vagrant/transcoder-ffmpeg";
 }
 
 function to-docs() {
