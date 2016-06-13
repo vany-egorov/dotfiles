@@ -5,16 +5,14 @@
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 
 (require 'package)
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 (require 'ansi-color)
-(defun colorize-compilation-buffer ()
-  (let ((inhibit-read-only t))
-    (ansi-color-apply-on-region (point-min) (point-max))))
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+  (defun colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 (custom-set-variables '(solarized-termcolors 256))
@@ -26,3 +24,16 @@
     (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
   (enable-theme 'solarized))
 (set-background-mode nil solarized-default-background-mode)
+
+(package-initialize)
+
+(require 'helm-config)
+(require 'helm)
+(helm-mode 1)
+(global-set-key (kbd "M-l") 'helm-buffers-list)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+(require 'powerline)
+(powerline-vim-theme)
