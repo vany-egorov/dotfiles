@@ -55,4 +55,7 @@ nnoremap <silent> <Leader>w :Bdelete<CR>
 nmap <C-B><C-B> :set invnumber<CR>
 nmap <C-K><C-K> :set relativenumber!<CR>
 nmap <C-M><C-M> :set list!<CR>
-
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
