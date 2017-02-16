@@ -27,6 +27,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'moll/vim-bbye'
 Plug 'scrooloose/nerdcommenter'
 Plug '907th/vim-auto-save'
+Plug 'jceb/vim-orgmode'
 " Initialize plugin system
 call plug#end()
 
@@ -39,18 +40,25 @@ let NERDTreeShowHidden=1
 set showcmd
 " set relativenumber
 set number
+set lazyredraw
 let g:airline#extensions#tabline#fnamemod = ':t' " Name of buffer to only filename instead of path
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 let g:auto_save = 1 " enable AutoSave on Vim startup
 let g:auto_save_no_updatetime = 1 " do not change the 'updatetime' option
+
 autocmd FileType nerdtree set norelativenumber
+autocmd FileType nerdtree set nocursorline
 autocmd FileType taglist set norelativenumber
+set cursorline
+hi CursorLine gui=underline cterm=underline
 
 map q <Nop>
 map <C-n> :NERDTreeToggle<CR>
 " map <C-P> :CommandTBuffer<Enter>
+nmap <silent> <Leader>c <Plug>(CommandTCommand)
+nmap <silent> <Leader>b <Plug>(CommandTMRU)
 nnoremap <silent> <Leader>w :Bdelete<CR>
 nmap <C-B><C-B> :set invnumber<CR>
 nmap <C-K><C-K> :set relativenumber!<CR>
