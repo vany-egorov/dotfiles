@@ -68,7 +68,9 @@ autocmd FileType nerdtree set norelativenumber
 autocmd FileType nerdtree set nocursorline
 autocmd FileType taglist set norelativenumber
 set cursorline
+set hlsearch
 hi CursorLine gui=underline cterm=underline
+hi Search ctermbg=70
 
 map q <Nop>
 map <C-n> :NERDTreeToggle<CR>
