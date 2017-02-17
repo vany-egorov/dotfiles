@@ -17,11 +17,11 @@ Plug 'scrooloose/nerdtree'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
 Plug 'rust-lang/rust.vim'
-Plug 'wincent/command-t', {
-	\   'do': 'cd ruby/command-t && ruby extconf.rb && make'
-	\ }
+" Plug 'wincent/command-t', {
+"         \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
+"         \ }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -31,6 +31,8 @@ Plug '907th/vim-auto-save'
 Plug 'jceb/vim-orgmode'
 " Plug 'Yggdroot/indentLine'
 Plug 'majutsushi/tagbar'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
 
@@ -72,17 +74,16 @@ set hlsearch
 hi CursorLine gui=underline cterm=underline
 hi Search ctermbg=70
 
-map q <Nop>
 map <C-n> :NERDTreeToggle<CR>
 " map <C-P> :CommandTBuffer<Enter>
-nmap <silent> <Leader>c <Plug>(CommandTCommand)
-nmap <silent> <Leader>b <Plug>(CommandTMRU)
-nmap <silent> <Leader>r <Plug>(CommandTTag)
+nmap <silent> <Leader>c :Commands<CR>
+nmap <silent> <Leader>b :Buffers<CR>
+nmap <silent> <Leader>r :BTags<CR>
 nmap <F8> :TagbarToggle<CR>
 nnoremap <silent> <Leader>w :Bdelete<CR>
 nmap <C-B><C-B> :set invnumber<CR>
-nmap <C-K><C-K> :set relativenumber!<CR>
-nmap <C-M><C-M> :set list!<CR>
+nmap <C-M><C-M> :set relativenumber!<CR>
+nmap <C-K><C-K> :set list!<CR>
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
