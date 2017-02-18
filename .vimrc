@@ -9,7 +9,6 @@ syntax on
 " :set cursorline
 
 set t_Co=256
-let base16colorspace=256
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
@@ -17,11 +16,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'chriskempson/base16-vim'
 Plug 'rust-lang/rust.vim'
-" Plug 'wincent/command-t', {
-"         \   'do': 'cd ruby/command-t && ruby extconf.rb && make'
-"         \ }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
@@ -29,14 +24,19 @@ Plug 'moll/vim-bbye'
 Plug 'scrooloose/nerdcommenter'
 Plug '907th/vim-auto-save'
 Plug 'jceb/vim-orgmode'
-" Plug 'Yggdroot/indentLine'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'vim-scripts/twilight256.vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'gkz/vim-ls'
 " Initialize plugin system
 call plug#end()
 
-colorscheme railscasts
+colorscheme twilight256
+set fillchars+=vert:\│
+hi clear VertSplit
 
 set laststatus=2 " vim-airline
 set backspace=2 " make backspace work like most other apps
@@ -74,6 +74,21 @@ set hlsearch
 hi CursorLine gui=underline cterm=underline
 hi Search ctermbg=70
 
+" <syntastic>
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_rust_checkers = ['rustc']
+" </syntastic>
+
 map <C-n> :NERDTreeToggle<CR>
 " map <C-P> :CommandTBuffer<Enter>
 nmap <silent> <Leader>c :Commands<CR>
@@ -88,3 +103,5 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
