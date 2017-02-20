@@ -34,7 +34,7 @@ Plug 'gkz/vim-ls'
 " Initialize plugin system
 call plug#end()
 
-colorscheme twilight256
+colorscheme railscasts
 set fillchars+=vert:\│
 hi clear VertSplit
 
@@ -73,6 +73,7 @@ set cursorline
 set hlsearch
 hi CursorLine gui=underline cterm=underline
 hi Search ctermbg=70
+hi MatchParen cterm=none ctermbg=none ctermfg=yellow
 
 " <syntastic>
 set statusline+=%#warningmsg#
@@ -85,8 +86,8 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_rust_checkers = ['rustc']
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_rust_checkers = ['rustc']
 " </syntastic>
 
 map <C-n> :NERDTreeToggle<CR>
@@ -105,3 +106,11 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
+
+" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
