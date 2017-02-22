@@ -29,8 +29,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/twilight256.vim'
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 Plug 'gkz/vim-ls'
+Plug 'fatih/vim-go'
 " Initialize plugin system
 call plug#end()
 
@@ -76,19 +77,30 @@ hi Search ctermbg=70
 hi MatchParen cterm=none ctermbg=none ctermfg=yellow
 
 " <syntastic>
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_loc_list_height = 5
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
 
 " let g:syntastic_javascript_checkers = ['eslint']
 " let g:syntastic_rust_checkers = ['rustc']
 " </syntastic>
+
+" <go>
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+let g:go_fmt_command = "goimports"
+" </go>
 
 map <C-n> :NERDTreeToggle<CR>
 " map <C-P> :CommandTBuffer<Enter>
