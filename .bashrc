@@ -79,11 +79,6 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='exa -abghHliS'
-alias la='ls -A'
-alias l='exa'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -128,6 +123,15 @@ if [[ "$TERM" =~ 256color ]]; then
 else
 	export PS1="\[\033[0;32m\]\u \[\033[36m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
 fi
+
+# https://www.mankier.com/1/exa
+# da = a file's date;
+# di = directories;
+export EXA_COLORS="da=38;5;253:di=38;5;253"
+alias ll='exa -abghHliS'
+alias la='ls -A'
+alias l='exa'
+alias cat=`bat`
 
 function transcoder-ctl-rsync {
 	rsync \
