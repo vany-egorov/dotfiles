@@ -1,0 +1,13 @@
+[user]
+	email = vany.egorov@gmail.com
+	name = Ivan Egorov
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+	lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
+	lgfzf = !git-lg-fzf
+	rank = shortlog -sn --no-merges
+	cmt = !git add . && git add -u && git commit -m
+	details = log -n1 -p --format=fuller
