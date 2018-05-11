@@ -131,7 +131,7 @@ export EXA_COLORS="da=38;5;253:di=38;5;253"
 alias ll='exa -abghHliS'
 alias la='ls -A'
 alias l='exa'
-alias cat=`bat`
+alias cat='bat'
 
 function transcoder-ctl-rsync {
 	rsync \
