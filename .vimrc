@@ -1,20 +1,20 @@
 """ Plugins
-  " fzf config
-  nmap <C-p> :Files<cr>
-  imap <c-x><c-l> <plug>(fzf-complete-line)
+" fzf
+nmap <C-p> :Files<cr>
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
-  let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-i': 'split',
-    \ 'ctrl-s': 'vsplit' }
-  let g:fzf_layout = { 'down': '~60%' }
+let g:fzf_action = {
+\ 'ctrl-t': 'tab split',
+\ 'ctrl-i': 'split',
+\ 'ctrl-s': 'vsplit' }
+let g:fzf_layout = { 'down': '~60%' }
 
-  let g:rg_command = '
-    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-    \ -g "*.{js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,rs,ls,hpp,h,hs,rb,conf,fa,lst}"
-    \ -g "!{.config,.git,node_modules,bower_components,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist}/*" '
+let g:rg_command = '
+\ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+\ -g "*.{js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,rs,ls,hpp,h,hs,rb,conf,fa,lst}"
+\ -g "!{.config,.git,node_modules,bower_components,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist}/*" '
 
-  command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
@@ -40,8 +40,6 @@ Plug 'flazz/vim-colorschemes'
 " Plug 'vim-syntastic/syntastic'
 Plug 'gkz/vim-ls'
 Plug 'fatih/vim-go'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Install fzf for user
-Plug 'junegunn/fzf.vim'                                           " Fzf vim plugin
 " Initialize plugin system
 call plug#end()
 

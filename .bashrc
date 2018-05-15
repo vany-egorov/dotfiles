@@ -118,11 +118,11 @@ parse_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-if [[ "$TERM" =~ 256color ]]; then
-	export PS1="\[\033[38;5;113m\]\u \[\033[38;5;39m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
-else
-	export PS1="\[\033[0;32m\]\u \[\033[36m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
-fi
+# if [[ "$TERM" =~ 256color ]]; then
+export PS1="\[\033[38;5;113m\]\u \[\033[38;5;39m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
+# else
+#	export PS1="\[\033[0;32m\]\u \[\033[36m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
+# fi
 
 # https://www.mankier.com/1/exa
 # da = a file's date;
@@ -560,8 +560,8 @@ export DEBEMAIL DEBFULLNAME
 VIMRUNTIME=/usr/bin
 EDITOR=/usr/bin/vim
 
-# # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-# export PATH="$PATH:$HOME/.rvm/bin"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 
 source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
