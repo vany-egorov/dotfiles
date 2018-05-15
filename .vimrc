@@ -59,7 +59,7 @@ set backspace=2 " make backspace work like most other apps
 set showcmd
 " set relativenumber
 " set number
-set lazyredraw
+" set lazyredraw
 let NERDTreeShowHidden=1
 let g:airline#extensions#tabline#enabled = 1 " vim-airline
 let g:airline#extensions#tabline#fnamemod = ':t' " Name of buffer to only filename instead of path
@@ -96,7 +96,7 @@ hi MatchParen cterm=none ctermbg=none ctermfg=yellow
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-" 
+ 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_loc_list_height = 5
 " let g:syntastic_auto_loc_list = 0
