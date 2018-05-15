@@ -1,21 +1,28 @@
-set nocompatible
-set hidden
+""" Plugins
+  " fzf config
+  nmap <C-p> :Files<cr>
+  imap <c-x><c-l> <plug>(fzf-complete-line)
 
-syntax on
+  let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-i': 'split',
+    \ 'ctrl-s': 'vsplit' }
+  let g:fzf_layout = { 'down': '~60%' }
 
-" :hi CursorLine   cterm=NONE ctermbg=NONE ctermfg=white guibg=darkred guifg=white
-" :hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=white guibg=darkred guifg=white
-" :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-" :set cursorline
+  let g:rg_command = '
+    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+    \ -g "*.{js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,rs,ls,hpp,h,hs,rb,conf,fa,lst}"
+    \ -g "!{.config,.git,node_modules,bower_components,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist}/*" '
 
-set t_Co=256
+  command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
-Plug 'jpo/vim-railscasts-theme'
+" Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
 Plug 'rust-lang/rust.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'editorconfig/editorconfig-vim'
@@ -29,13 +36,23 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/twilight256.vim'
+Plug 'flazz/vim-colorschemes'
 " Plug 'vim-syntastic/syntastic'
 Plug 'gkz/vim-ls'
 Plug 'fatih/vim-go'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Install fzf for user
+Plug 'junegunn/fzf.vim'                                           " Fzf vim plugin
 " Initialize plugin system
 call plug#end()
 
-colorscheme railscasts
+""" ******
+set nocompatible
+set hidden
+syntax on
+set t_Co=256
+set encoding=UTF-8
+
+colorscheme twilight256
 set fillchars+=vert:\│
 hi clear VertSplit
 
@@ -48,6 +65,7 @@ set lazyredraw
 let NERDTreeShowHidden=1
 let g:airline#extensions#tabline#enabled = 1 " vim-airline
 let g:airline#extensions#tabline#fnamemod = ':t' " Name of buffer to only filename instead of path
+let g:airline_theme='minimalist'
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
@@ -72,7 +90,7 @@ autocmd FileType nerdtree set nocursorline
 autocmd FileType taglist set norelativenumber
 set cursorline
 set hlsearch
-hi CursorLine gui=underline cterm=underline
+hi CursorLine gui=NONE cterm=NONE
 hi Search ctermbg=70
 hi MatchParen cterm=none ctermbg=none ctermfg=yellow
 
@@ -102,6 +120,7 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 " </go>
 
+""" Key modifiers
 map <C-n> :NERDTreeToggle<CR>
 " map <C-P> :CommandTBuffer<Enter>
 nmap <silent> <Leader>c :Commands<CR>
@@ -119,10 +138,3 @@ noremap <Right> <NOP>
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
-" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
