@@ -11,3 +11,8 @@
 	rank = shortlog -sn --no-merges
 	cmt = !git add . && git add -u && git commit -m
 	details = log -n1 -p --format=fuller
+	d = difftool
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
