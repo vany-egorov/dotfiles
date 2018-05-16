@@ -38,7 +38,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/twilight256.vim'
 Plug 'flazz/vim-colorschemes'
-
 Plug 'mbbill/undotree'
 " Plug 'vim-syntastic/syntastic'
 Plug 'gkz/vim-ls'
