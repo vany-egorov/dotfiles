@@ -38,6 +38,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/twilight256.vim'
 Plug 'flazz/vim-colorschemes'
+
+Plug 'mbbill/undotree'
 " Plug 'vim-syntastic/syntastic'
 Plug 'gkz/vim-ls'
 Plug 'fatih/vim-go'
@@ -129,6 +131,7 @@ nmap <silent> <Leader>c :Commands<CR>
 nmap <silent> <Leader>b :Buffers<CR>
 nmap <silent> <Leader>r :BTags<CR>
 nmap <F8> :TagbarToggle<CR>
+nnoremap <F5> :UndotreeToggle<cr>
 nnoremap <silent> <Leader>w :Bdelete<CR>
 nmap <C-B><C-B> :set invnumber<CR>
 nmap <C-M><C-M> :set relativenumber!<CR>
