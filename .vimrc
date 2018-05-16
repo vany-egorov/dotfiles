@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdtree'
 " Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 Plug 'rust-lang/rust.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'editorconfig/editorconfig-vim'
@@ -35,6 +35,7 @@ Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/twilight256.vim'
 Plug 'flazz/vim-colorschemes'
 " Plug 'vim-syntastic/syntastic'
@@ -117,6 +118,9 @@ let g:go_highlight_build_constraints = 1
 
 let g:go_fmt_command = "goimports"
 " </go>
+
+set listchars=eol:$,tab:>—,trail:~,extends:>,precedes:<,space:·
+let g:indentLine_char = '│'
 
 """ Key modifiers
 map <C-n> :NERDTreeToggle<CR>
