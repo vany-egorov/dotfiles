@@ -241,6 +241,17 @@ function enc-bblvod-deb-rsync {
 		egorov@bl-dev-gpu2-trans01.int:/home/egorov/enc
 }
 
+function enc-ui-old-rsync {
+	rsync \
+		-avz --info=progress2 \
+		--rsync-path="mkdir -p /home/egorov/enc/ && rsync" \
+		-e "ssh -p 2222" \
+		/mnt/d/vm/debian/gl-ce.int/enc/ui-old \
+		--exclude '.git' \
+		--exclude 'tmp' \
+		egorov@bl-dev-gpu2-trans01.int:/home/egorov/enc
+}
+
 function vanga-rsync {
 	rsync \
 		-avz --info=progress2 \
@@ -338,6 +349,15 @@ function tmux-dev-transcoder-sentinel {
 	tmux a
 }
 
+function tmux-dev-transcoder-api {
+	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux a
+}
+
 function tmux-dev-transcoder-dash-cenc {
 	tmux new-session -s transcoder-dash-cenc -n 'rsync'        -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
 	tmux new-window                          -n 'wv-client'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
@@ -380,8 +400,11 @@ PATH_ENC_WORKER_DEB="${PATH_ENC}/worker-deb"
 PATH_ENC_POLLER="${PATH_ENC}/poller"
 PATH_ENC_UI="${PATH_ENC}/ui"
 PATH_ENC_UI_DEB="${PATH_ENC}/ui-deb"
+PATH_ENC_UI_OLD="${PATH_ENC}/ui-old"
+PATH_ENC_UI_OLD_DEB="${PATH_ENC}/ui-old-deb"
 function tmux-dev-enc {
 	tmux new-session -s enc -n 'poller-rsync'  -d "cd '${PATH_ENC_POLLER}/src' && /bin/bash" &&
+	tmux new-window         -n 'build'            "cd '${PATH_ENC_POLLER}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window         -n 'poller'           "cd '${PATH_ENC_POLLER}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window         -n 'worker'           "cd '${PATH_ENC_WORKER}'     && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window         -n 'worker'           "cd '${PATH_ENC_WORKER}'     && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
@@ -406,6 +429,8 @@ alias cd-enc-worker-deb="cd ${PATH_ENC_WORKER_DEB}"
 alias cd-enc-poller="cd ${PATH_ENC_POLLER}"
 alias cd-enc-ui="cd ${PATH_ENC_UI}"
 alias cd-enc-ui-deb="cd ${PATH_ENC_UI_DEB}"
+alias cd-enc-ui-old="cd ${PATH_ENC_UI_OLD}"
+alias cd-enc-ui-old-deb="cd ${PATH_ENC_UI_OLD_DEB}"
 
 function tmux-dev-f451 {
 	tmux new-session -s f451 -n rsync    -d "cd '${PATH_F451}/f451/src' && /bin/bash" &&
@@ -564,7 +589,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.10.2
+gvm use go1.10.3
 
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 # n 6.9.5
