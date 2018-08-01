@@ -12,6 +12,7 @@
 	cmt = !git add . && git add -u && git commit -m
 	details = log -n1 -p --format=fuller
 	d = difftool
+	tags = !git for-each-ref --sort=-committerdate --format='%(color:131)%(refname:short)%(color:reset) %(color:113)(%(taggerdate))%(color:reset) - %(subject) %(body)' refs/tags
 [diff]
 	tool = vimdiff
 [difftool]
