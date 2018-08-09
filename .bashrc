@@ -274,6 +274,30 @@ function git-lg-fzf {
 				xargs -I % sh -c 'git show --color=always % | less -R'"
 }
 
+function git-checkout-b-fzf() {
+	local branches target
+	branches=$(
+		git branch --all | grep -v HEAD |
+		sed "s/.* //" | sed "s#remotes/[^/]*/##" |
+		sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+	target=$(
+		(echo "$branches") |
+		fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
+			--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
+		git checkout $(echo "$target" | awk '{print $2}')
+}
+
+function git-checkout-t-fzf() {
+	local tags target
+	tags=$(
+		git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+	target=$(
+		(echo "$tags") |
+		fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
+			--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
+	git checkout $(echo "$target" | awk '{print $2}')
+}
+
 PATH_PROJECTS="/mnt/d/vm/debian"
 PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
 PATH_GL_BRADBURYLAB_TV="${PATH_PROJECTS}/gl.bradburylab.tv"
@@ -410,6 +434,8 @@ function tmux-dev-enc {
 	tmux new-window         -n 'worker'           "cd '${PATH_ENC_WORKER}'     && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window         -n 'core-rsync'       "cd '${PATH_ENC_CORE_DEB}'   && /bin/bash" &&
 	tmux new-window         -n 'core'             "cd '${PATH_ENC_CORE_DEB}'   && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window         -n 'ui-old'           "cd '${PATH_ENC_UI_OLD}'     && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window         -n 'ui-old-deb'       "cd '${PATH_ENC_UI_OLD_DEB}' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux a
 }
 function tmux-dev-enc-mts-24 {
