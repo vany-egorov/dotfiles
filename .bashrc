@@ -128,7 +128,7 @@ export PS1="\[\033[38;5;113m\]\u \[\033[38;5;39m\]\w\[\033[0m\]\$(parse_git_bran
 # da = a file's date;
 # di = directories;
 export EXA_COLORS="da=38;5;253:di=38;5;253"
-alias ll='exa -abghHliS'
+alias ll='exa -abghl'
 alias la='ls -A'
 alias l='exa'
 alias cat='bat'
@@ -280,10 +280,10 @@ function git-checkout-b-fzf() {
 		git branch --all | grep -v HEAD |
 		sed "s/.* //" | sed "s#remotes/[^/]*/##" |
 		sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-	target=$(
+		target=$(
 		(echo "$branches") |
-		fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
-			--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
+			fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
+				--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
 		git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -375,6 +375,15 @@ function tmux-dev-transcoder-sentinel {
 
 function tmux-dev-transcoder-api {
 	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
+	tmux a
+}
+
+function tmux-dev-transcoder-ctl {
+	tmux new-session -s transcoder-ctl -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
 	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
 	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu2-trans01.int; /bin/bash" &&
@@ -606,7 +615,7 @@ alias cd-socket-server="cd ${PATH_SOCKET_SERVER}"
 
 DEBEMAIL="vany.egorov@gmail.com"
 DEBFULLNAME="Ivan Egorov"
-export DEBEMAIL DEBFULLNAME
+
 
 VIMRUNTIME=/usr/bin
 EDITOR=/usr/bin/vim
@@ -615,7 +624,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.10.3
+gvm use go1.12.5
 
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 # n 6.9.5
