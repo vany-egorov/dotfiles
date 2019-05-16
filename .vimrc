@@ -31,6 +31,7 @@ Plug 'moll/vim-bbye'
 Plug 'scrooloose/nerdcommenter'
 Plug '907th/vim-auto-save'
 Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -52,7 +53,11 @@ syntax on
 set t_Co=256
 set encoding=UTF-8
 
+set textwidth=0
+
 colorscheme twilight256
+" autocmd BufEnter *.org colorscheme flattown
+
 set fillchars+=vert:\│
 hi clear VertSplit
 
@@ -61,11 +66,22 @@ set backspace=2 " make backspace work like most other apps
 set showcmd
 " set relativenumber
 " set number
-" set lazyredraw
+set lazyredraw
 let NERDTreeShowHidden=1
+let NERDTreeShowExecutableFlag=0
 let g:airline#extensions#tabline#enabled = 1 " vim-airline
 let g:airline#extensions#tabline#fnamemod = ':t' " Name of buffer to only filename instead of path
 let g:airline_theme='minimalist'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '»'
+let g:airline_right_sep = '«'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = 'B'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
@@ -98,13 +114,13 @@ hi MatchParen cterm=none ctermbg=none ctermfg=yellow
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
- 
+"
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_loc_list_height = 5
 " let g:syntastic_auto_loc_list = 0
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 1
-
+"
 " let g:syntastic_javascript_checkers = ['eslint']
 " let g:syntastic_rust_checkers = ['rustc']
 " </syntastic>
@@ -122,6 +138,7 @@ let g:go_fmt_command = "goimports"
 
 set listchars=eol:$,tab:>—,trail:~,extends:>,precedes:<,space:·
 let g:indentLine_char = '│'
+let g:indentLine_enabled = 0
 
 """ Key modifiers
 map <C-n> :NERDTreeToggle<CR>
@@ -139,6 +156,14 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap <C-h> <NOP>
+inoremap <C-j> <NOP>
+inoremap <C-k> <NOP>
+inoremap <C-l> <NOP>
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 

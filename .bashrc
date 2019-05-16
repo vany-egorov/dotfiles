@@ -280,11 +280,11 @@ function git-checkout-b-fzf() {
 		git branch --all | grep -v HEAD |
 		sed "s/.* //" | sed "s#remotes/[^/]*/##" |
 		sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-		target=$(
+	target=$(
 		(echo "$branches") |
-			fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
-				--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
-		git checkout $(echo "$target" | awk '{print $2}')
+		fzf --no-hscroll --no-multi --delimiter="\t" -n 2 \
+			--ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
+	git checkout $(echo "$target" | awk '{print $2}')
 }
 
 function git-checkout-t-fzf() {
