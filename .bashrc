@@ -332,6 +332,7 @@ PATH_TRANSCODER_CTL_DEB="${PATH_TRANSCODER}/ctl-deb"
 PATH_TRANSCODER_HTTP_API_DEB="${PATH_TRANSCODER}/http-api-deb"
 PATH_TRANSCODER_UI_DEB="${PATH_TRANSCODER}/ui-deb"
 PATH_TRANSCODER_TEST="${PATH_TRANSCODER}/test"
+PATH_TRANSCODER_DOCS="${PATH_TRANSCODER}/docs"
 PATH_REMOTE_TRANSCODER="${PATH_REMOTE_GL_BRADBURYLAB_TV}/transcoder"
 PATH_F451="${PATH_GL_CE_INT}/f451"
 function tmux-dev-transcoder {
@@ -406,6 +407,13 @@ function tmux-dev-transcoder-ui {
 	tmux a
 }
 
+function tmux-dev-transcoder-docs {
+	tmux new-session -s transcoder-docs -n 'emacs'  -d "cd '${PATH_TRANSCODER_DOCS}' && /bin/bash" &&
+	tmux new-window                                    "cd '${PATH_TRANSCODER_DOCS}' && /bin/bash" &&
+	tmux new-window                                    "cd '${PATH_TRANSCODER_DOCS}' && /bin/bash" &&
+	tmux a
+}
+
 alias cd-bbl-transcoder-http-api="cd ${PATH_TRANSCODER_HTTP_API}"
 alias cd-transcoder-http-api="cd ${PATH_TRANSCODER_HTTP_API}"
 alias cd-bbl-transcoder-ui="cd ${PATH_TRANSCODER_UI}"
@@ -424,6 +432,7 @@ alias cd-transcoder-ui-deb="cd ${PATH_TRANSCODER_UI_DEB}"
 alias cd-bbl-transcoder-ctl-deb="cd ${PATH_TRANSCODER_CTL_DEB}"
 alias cd-transcoder-ctl-deb="cd ${PATH_TRANSCODER_CTL_DEB}"
 alias cd-transcoder-test="cd ${PATH_TRANSCODER_TEST}"
+alias cd-transcoder-docs="cd ${PATH_TRANSCODER_DOCS}"
 
 PATH_ENC="${PATH_GL_CE_INT}/enc"
 PATH_ENC_CORE="${PATH_ENC}/bblvod"
