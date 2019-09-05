@@ -266,6 +266,48 @@ function vanga-rsync {
 		egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
+function sandbox-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/sandbox \
+	--exclude '.git' \
+	--exclude 'env/go' \
+	--exclude 'env/gopath' \
+	--exclude 'bin' \
+	--exclude 'log' \
+	--exclude 'target' \
+	--exclude 'node_modules' \
+	--exclude '*.fix' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
+function sandbox-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/sandbox \
+	--exclude '.git' \
+	--exclude 'env/go' \
+	--exclude 'env/gopath' \
+	--exclude 'bin' \
+	--exclude 'log' \
+	--exclude 'target' \
+	--exclude 'node_modules' \
+	--exclude '*.fix' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
+function va-ts-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/github.com/video-audio/va-ts \
+	--exclude '.git' \
+	--exclude 'target' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
 function git-lg-fzf {
 	git lg |
 		fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
@@ -322,6 +364,23 @@ function tmux-dev-libva {
 	tmux a
 }
 alias cd-libva="cd ${PATH_LIBVA}"
+
+function tmux-dev-sandbox {
+    tmux new-session -s sandbox -n sandbox -d "cd '${PATH_SANDBOX}'; /bin/bash" &&
+	tmux a
+}
+alias cd-sandbox="cd ${PATH_SANDBOX}"
+
+PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
+PATH_VIDEO_AUDIO="${PATH_GITHUB_COM}/video-audio"
+PATH_VA_TS="${PATH_VIDEO_AUDIO}/va-ts"
+function tmux-dev-va-ts {
+    tmux new-session -s va-ts -n va-ts -d "cd '${PATH_VA_TS}'; /bin/bash" &&
+	tmux a
+}
+alias cd-github-com="cd ${PATH_GITHUB_COM}"
+alias cd-video-audio="cd ${PATH_VIDEO_AUDIO}"
+alias cd-va-ts="cd ${PATH_VA_TS}"
 
 PATH_TRANSCODER="${PATH_GL_CE_INT}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
@@ -625,7 +684,6 @@ alias cd-socket-server="cd ${PATH_SOCKET_SERVER}"
 DEBEMAIL="vany.egorov@gmail.com"
 DEBFULLNAME="Ivan Egorov"
 
-
 VIMRUNTIME=/usr/bin
 EDITOR=/usr/bin/vim
 
@@ -633,7 +691,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.12.5
+gvm use go1.13
 
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 # n 6.9.5
