@@ -308,6 +308,25 @@ function va-ts-rsync {
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
+function va-tool-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/github.com/video-audio/va-tool \
+	--exclude '.git' \
+	--exclude 'target' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
+function va-dumps-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/github.com/video-audio/va-dumps \
+	--exclude '.git' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
 function git-lg-fzf {
 	git lg |
 		fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
@@ -373,14 +392,25 @@ alias cd-sandbox="cd ${PATH_SANDBOX}"
 
 PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
 PATH_VIDEO_AUDIO="${PATH_GITHUB_COM}/video-audio"
-PATH_VA_TS="${PATH_VIDEO_AUDIO}/va-ts"
-function tmux-dev-va-ts {
-    tmux new-session -s va-ts -n va-ts -d "cd '${PATH_VA_TS}'; /bin/bash" &&
-	tmux a
-}
+
 alias cd-github-com="cd ${PATH_GITHUB_COM}"
 alias cd-video-audio="cd ${PATH_VIDEO_AUDIO}"
+
+PATH_VA_TS="${PATH_VIDEO_AUDIO}/va-ts"
+function tmux-dev-va-ts {
+	tmux new-session -s va-ts -n va-ts -d "cd '${PATH_VA_TS}'; /bin/bash" &&
+	tmux new-window           -n run      "cd '${PATH_VA_TS}'; /bin/bash" &&
+	tmux a
+}
 alias cd-va-ts="cd ${PATH_VA_TS}"
+
+PATH_VA_TOOL="${PATH_VIDEO_AUDIO}/va-tool"
+function tmux-dev-va-tool {
+	tmux new-session -s va-tool -n va-tool -d "cd '${PATH_VA_TOOL}'; /bin/bash" &&
+	tmux new-window             -n run        "cd '${PATH_VA_TOOL}'; /bin/bash" &&
+	tmux a
+}
+alias cd-va-tool="cd ${PATH_VA_TOOL}"
 
 PATH_TRANSCODER="${PATH_GL_CE_INT}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
