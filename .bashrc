@@ -327,6 +327,16 @@ function va-dumps-rsync {
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
+function bbl-limbo-webrtc {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/webrtc \
+	--exclude '.git' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
+
 function git-lg-fzf {
 	git lg |
 		fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
@@ -364,6 +374,10 @@ PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
 PATH_GL_BRADBURYLAB_TV="${PATH_PROJECTS}/gl.bradburylab.tv"
 PATH_GL_CE_INT="${PATH_PROJECTS}/gl-ce.int"
 
+alias cd-github-com="cd ${PATH_GITHUB_COM}"
+alias cd-gl-bradburylab-tv="cd ${PATH_GL_BRADBURYLAB_TV}"
+alias cd-gl-ce-int="cd ${PATH_GL_CE_INT}"
+
 PATH_REMOTE_PROJECTS="/vagrant"
 PATH_REMOTE_GITHUB_COM="${PATH_REMOTE_PROJECTS}/github.com"
 PATH_REMOTE_GL_BRADBURYLAB_TV="${PATH_REMOTE_PROJECTS}/gl.bradburylab.tv"
@@ -390,7 +404,6 @@ function tmux-dev-sandbox {
 }
 alias cd-sandbox="cd ${PATH_SANDBOX}"
 
-PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
 PATH_VIDEO_AUDIO="${PATH_GITHUB_COM}/video-audio"
 
 alias cd-github-com="cd ${PATH_GITHUB_COM}"
@@ -710,6 +723,17 @@ function tmux-dev-socket-server() {
 	tmux a
 }
 alias cd-socket-server="cd ${PATH_SOCKET_SERVER}"
+
+PATH_LIMBO_WEBRTC="${PATH_GL_BRADBURYLAB_TV}/limbo/webrtc"
+function tmux-dev-limbo-webrtc() {
+	tmux new-session -s limbo-webrtc -n "rsync" -d "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
+	tmux new-window                  -n "build"    "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
+	tmux new-window                  -n "01"       "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
+	tmux new-window                  -n "02"       "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
+	tmux new-window                  -n "03"       "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
+	tmux a
+}
+alias cd-limbo-webrtc="cd ${PATH_LIMBO_WEBRTC}"
 
 DEBEMAIL="vany.egorov@gmail.com"
 DEBFULLNAME="Ivan Egorov"
