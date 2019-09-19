@@ -327,14 +327,16 @@ function va-dumps-rsync {
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
-function bbl-limbo-webrtc {
+function bbl-limbo-webrtc-rsync {
     rsync \
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
-	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/webrtc \
+	--rsync-path="mkdir -p /home/egorov/limbo-webrtc/ && rsync" \
+	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/webrtc/ \
 	--exclude '.git' \
-	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov/limbo-webrtc/
 }
+alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
 
 function git-lg-fzf {
