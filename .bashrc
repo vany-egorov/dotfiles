@@ -282,22 +282,6 @@ function sandbox-rsync {
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
-function sandbox-rsync {
-    rsync \
-	-avz --info=progress2 \
-	-e "ssh -p 2222" \
-	/mnt/d/vm/debian/sandbox \
-	--exclude '.git' \
-	--exclude 'env/go' \
-	--exclude 'env/gopath' \
-	--exclude 'bin' \
-	--exclude 'log' \
-	--exclude 'target' \
-	--exclude 'node_modules' \
-	--exclude '*.fix' \
-	egorov@bl-dev-gpu2-trans01.int:/home/egorov
-}
-
 function va-ts-rsync {
     rsync \
 	-avz --info=progress2 \
@@ -334,10 +318,24 @@ function bbl-limbo-webrtc-rsync {
 	--rsync-path="mkdir -p /home/egorov/limbo-webrtc/ && rsync" \
 	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/webrtc/ \
 	--exclude '.git' \
+	--exclude 'node_modules' \
+	--exclude 'yarn.lock' \
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov/limbo-webrtc/
 }
 alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
+function go-x-pkg-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/go-x-pkg/ && rsync" \
+	/mnt/d/vm/debian/github.com/go-x-pkg/ \
+	--exclude '.git' \
+	--exclude 'node_modules' \
+	--exclude 'yarn.lock' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov/go-x-pkg/
+}
+alias limbo-webrtc-rsync="go-x-pkg-rsync"
 
 function git-lg-fzf {
 	git lg |
@@ -426,6 +424,9 @@ function tmux-dev-va-tool {
 	tmux a
 }
 alias cd-va-tool="cd ${PATH_VA_TOOL}"
+
+PATH_GO_X_PKG="${PATH_GITHUB_COM}/go-x-pkg"
+alias cd-go-x-pkg="cd ${PATH_GO_X_PKG}"
 
 PATH_TRANSCODER="${PATH_GL_CE_INT}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
@@ -747,7 +748,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.13
+gvm use go1.13.4
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
