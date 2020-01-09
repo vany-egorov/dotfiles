@@ -133,22 +133,6 @@ alias la='ls -A'
 alias l='exa'
 alias cat='bat'
 
-function transcoder-ctl-rsync {
-	rsync \
-		-avz --info=progress2 \
-		-e "ssh -p 2222" \
-			/mnt/d/vm/debian/gl-ce.int/transcoder/ctl/* \
-			--exclude '.git' \
-			--exclude 'env/go' \
-			--exclude 'env/gopath' \
-			--exclude 'bin' \
-			--exclude 'log' \
-		--exclude 'src/vendor' \
-			--exclude '*.fix' \
-			--exclude 'tmp' \
-			egorov@bl-dev-gpu2-trans01.int:/home/egorov/transcoder-ctl
-}
-
 function bbl-streamer-rsync {
 	rsync \
 		-avz --info=progress2 \
@@ -311,6 +295,16 @@ function va-dumps-rsync {
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov
 }
 
+function video-audio-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	/mnt/d/vm/debian/github.com/video-audio \
+	--exclude '.git' \
+	--exclude 'target' \
+	egorov@bl-dev-gpu2-trans01.int:/home/egorov
+}
+
 function bbl-limbo-webrtc-rsync {
     rsync \
 	-avz --info=progress2 \
@@ -324,6 +318,22 @@ function bbl-limbo-webrtc-rsync {
 }
 alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
+# bl-dev-gpu2-trans01.int
+# bl-dev-enc01
+# bl-dev-enc02
+function bbl-transcoder-ctl-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
+	/mnt/d/vm/debian/gl-ce.int/transcoder/ctl \
+	--exclude '.git' \
+	--exclude 'log' \
+	--exclude 'bin' \
+	egorov@bl-dev-enc01:/home/egorov/transcoder/
+}
+alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
+
 function go-x-pkg-rsync {
     rsync \
 	-avz --info=progress2 \
@@ -335,7 +345,6 @@ function go-x-pkg-rsync {
 	--exclude 'yarn.lock' \
 	egorov@bl-dev-gpu2-trans01.int:/home/egorov/go-x-pkg/
 }
-alias limbo-webrtc-rsync="go-x-pkg-rsync"
 
 function git-lg-fzf {
 	git lg |
@@ -748,7 +757,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.13.4
+gvm use go1.13.5
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
