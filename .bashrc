@@ -328,8 +328,6 @@ function bbl-transcoder-ctl-rsync {
 	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
 	/mnt/d/vm/debian/gl-ce.int/transcoder/ctl \
 	--exclude '.git' \
-	--exclude 'log' \
-	--exclude 'bin' \
 	egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/
 }
 alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
@@ -345,6 +343,17 @@ function go-x-pkg-rsync {
 	--exclude 'yarn.lock' \
 	egorov@bl-dev-gpu-trans01.int:/home/egorov/go-x-pkg/
 }
+
+function bbl-rm-hack-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/rm/hack/ && rsync" \
+	/mnt/d/vm/debian/gl.bradburylab.tv/rm/hack/ \
+	--exclude '.git' \
+	egorov@bl-dev-gpu-trans01.int:/home/egorov/rm/hack/
+}
+alias bbl-redmine-hack-rsync="bbl-rm-hack-rsync"
 
 function git-lg-fzf {
 	git lg |
@@ -757,7 +766,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.13.6
+gvm use go1.13.7
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
