@@ -756,6 +756,17 @@ function tmux-dev-limbo-webrtc() {
 }
 alias cd-limbo-webrtc="cd ${PATH_LIMBO_WEBRTC}"
 
+PATH_RM_HACK="${PATH_GL_BRADBURYLAB_TV}/rm/hack"
+function tmux-dev-rm() {
+	tmux new-session -s limbo-webrtc -n "rsync" -d "cd '${PATH_RM_HACK}'; /bin/bash" &&
+	tmux new-window                  -n "build"    "cd '${PATH_RM_HACK}'; /bin/bash" &&
+	tmux a
+}
+alias cd-rm="cd ${PATH_RM_HACK}"
+alias cd-redmine="cd ${PATH_RM_HACK}"
+alias cd-rm-hack="cd ${PATH_RM_HACK}"
+
+
 DEBEMAIL="vany.egorov@gmail.com"
 DEBFULLNAME="Ivan Egorov"
 
