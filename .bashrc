@@ -189,20 +189,19 @@ function transcoder-transcoder-core-2-deb-rsync {
 		egorov@bl-dev-gpu-trans01.int:/home/egorov
 }
 
-function enc-worker-rsync {
+function enc-poller-rsync {
 	rsync \
-		-avz --info=progress2 \
+		-av --info=progress2 \
+		--rsync-path="mkdir -p /home/egorov/enc/ && rsync" \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl-ce.int/enc/worker \
+		/mnt/d/vm/debian/gl.bradburylab.tv/enc/poller \
 		--exclude '.git' \
-		--exclude 'env/go' \
-		--exclude 'env/gopath' \
-		--exclude 'vendor' \
-		--exclude 'bin' \
-		--exclude 'log' \
-		--exclude '*.fix' \
+		--exclude 'env' \
+		--exclude 'bin/*' \
 		--exclude 'tmp' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov
+		--exclude 'log' \
+		--exclude 'doc' \
+		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
 }
 
 function enc-bblvod-rsync {
@@ -331,6 +330,23 @@ function bbl-transcoder-ctl-rsync {
 	egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/
 }
 alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
+
+# bl-dev-gpu-trans01.int
+# bl-dev-enc01
+# bl-dev-enc02
+function bbl-transcoder-ui-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
+	/mnt/d/vm/debian/gl-ce.int/transcoder/ui \
+	--exclude '.git' \
+	--exclude 'node_modules' \
+	--exclude 'bower_components' \
+	--exclude 'tmp' \
+	egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/
+}
+alias transcoder-ui-rsync="bbl-transcoder-ui-rsync"
 
 function go-x-pkg-rsync {
     rsync \
@@ -557,7 +573,7 @@ alias cd-transcoder-ctl-deb="cd ${PATH_TRANSCODER_CTL_DEB}"
 alias cd-transcoder-test="cd ${PATH_TRANSCODER_TEST}"
 alias cd-transcoder-docs="cd ${PATH_TRANSCODER_DOCS}"
 
-PATH_ENC="${PATH_GL_CE_INT}/enc"
+PATH_ENC="${PATH_GL_BRADBURYLAB_TV}/enc"
 PATH_ENC_CORE="${PATH_ENC}/bblvod"
 PATH_ENC_CORE_DEB="${PATH_ENC}/bblvod-deb"
 PATH_ENC_WORKER="${PATH_ENC}/worker"
@@ -758,8 +774,8 @@ alias cd-limbo-webrtc="cd ${PATH_LIMBO_WEBRTC}"
 
 PATH_RM_HACK="${PATH_GL_BRADBURYLAB_TV}/rm/hack"
 function tmux-dev-rm() {
-	tmux new-session -s limbo-webrtc -n "rsync" -d "cd '${PATH_RM_HACK}'; /bin/bash" &&
-	tmux new-window                  -n "build"    "cd '${PATH_RM_HACK}'; /bin/bash" &&
+	tmux new-session -s rm -n "rsync" -d "cd '${PATH_RM_HACK}'; /bin/bash" &&
+	tmux new-window        -n "build"    "cd '${PATH_RM_HACK}'; /bin/bash" &&
 	tmux a
 }
 alias cd-rm="cd ${PATH_RM_HACK}"
@@ -777,7 +793,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.13.7
+gvm use go1.14.1
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
