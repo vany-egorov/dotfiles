@@ -208,7 +208,7 @@ function enc-bblvod-rsync {
 	rsync \
 		-avz --info=progress2 \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl-ce.int/enc/bblvod \
+		/mnt/d/vm/debian/gl.bradburylab.tv/enc/bblvod \
 		--exclude '.git' \
 		egorov@bl-dev-gpu-trans01.int:/home/egorov
 }
@@ -218,7 +218,7 @@ function enc-bblvod-deb-rsync {
 		-avz --info=progress2 \
 		--rsync-path="mkdir -p /home/egorov/enc/ && rsync" \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl-ce.int/enc/bblvod-deb \
+		/mnt/d/vm/debian/gl.bradburylab.tv/enc/bblvod-deb \
 		--exclude '.git' \
 		--exclude 'tmp' \
 		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
@@ -229,7 +229,7 @@ function enc-ui-old-rsync {
 		-avz --info=progress2 \
 		--rsync-path="mkdir -p /home/egorov/enc/ && rsync" \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl-ce.int/enc/ui-old \
+		/mnt/d/vm/debian/gl.bradburylab.tv/enc/ui-old \
 		--exclude '.git' \
 		--exclude 'tmp' \
 		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
