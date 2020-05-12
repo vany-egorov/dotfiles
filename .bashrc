@@ -133,11 +133,14 @@ alias la='ls -A'
 alias l='exa'
 alias cat='bat'
 
+bl_dev="bl-dev-enc01.int"
+bl_dev="bl-dev-gpu-trans01.int"
+
 function bbl-streamer-rsync {
 	rsync \
 		-avz --info=progress2 \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl-ce.int/transcoder/bbl-streamer/* \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/bbl-streamer/* \
 		--exclude '.git' \
 		--exclude 'env/go' \
 		--exclude 'env/gopath' \
@@ -147,7 +150,7 @@ function bbl-streamer-rsync {
 		--exclude '*.ts' \
 		--exclude 'CudaSample' \
 		--exclude 'CudaSample-5.5' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/bbl-streamer
+		egorov@${bl_dev}:/home/egorov/transcoder/bbl-streamer
 }
 
 function gpac-rsync {
@@ -158,7 +161,7 @@ function gpac-rsync {
 		--exclude '.git' \
 		--exclude 'bin' \
 		--exclude 'log' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov/gpac
+		egorov@${bl_dev}:/home/egorov/gpac
 }
 
 function transcoder-ffmpeg-vanila-rsync {
@@ -173,7 +176,7 @@ function transcoder-ffmpeg-vanila-rsync {
 		--exclude 'log' \
 		--exclude '*.fix' \
 		--exclude 'tmp' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov
+		egorov@${bl_dev}:/home/egorov
 }
 
 function transcoder-transcoder-core-2-deb-rsync {
@@ -186,7 +189,7 @@ function transcoder-transcoder-core-2-deb-rsync {
 		--exclude 'bin' \
 		--exclude 'log' \
 		--exclude '*.fix' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov
+		egorov@${bl_dev}:/home/egorov
 }
 
 function enc-poller-rsync {
@@ -201,7 +204,7 @@ function enc-poller-rsync {
 		--exclude 'tmp' \
 		--exclude 'log' \
 		--exclude 'doc' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
+		egorov@${bl_dev}:/home/egorov/enc
 }
 
 function enc-bblvod-rsync {
@@ -210,7 +213,7 @@ function enc-bblvod-rsync {
 		-e "ssh -p 2222" \
 		/mnt/d/vm/debian/gl.bradburylab.tv/enc/bblvod \
 		--exclude '.git' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov
+		egorov@${bl_dev}:/home/egorov
 }
 
 function enc-bblvod-deb-rsync {
@@ -221,7 +224,7 @@ function enc-bblvod-deb-rsync {
 		/mnt/d/vm/debian/gl.bradburylab.tv/enc/bblvod-deb \
 		--exclude '.git' \
 		--exclude 'tmp' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
+		egorov@${bl_dev}:/home/egorov/enc
 }
 
 function enc-ui-old-rsync {
@@ -232,7 +235,7 @@ function enc-ui-old-rsync {
 		/mnt/d/vm/debian/gl.bradburylab.tv/enc/ui-old \
 		--exclude '.git' \
 		--exclude 'tmp' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov/enc
+		egorov@${bl_dev}:/home/egorov/enc
 }
 
 function vanga-rsync {
@@ -246,14 +249,14 @@ function vanga-rsync {
 		--exclude 'bin' \
 		--exclude 'log' \
 		--exclude '*.fix' \
-		egorov@bl-dev-gpu-trans01.int:/home/egorov
+		egorov@${bl_dev}:/home/egorov
 }
 
 function sandbox-rsync {
     rsync \
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
-	/mnt/d/vm/debian/sandbox \
+	/mnt/d/vm/debian/github.com/vany-egorov/sandbox \
 	--exclude '.git' \
 	--exclude 'env/go' \
 	--exclude 'env/gopath' \
@@ -262,7 +265,7 @@ function sandbox-rsync {
 	--exclude 'target' \
 	--exclude 'node_modules' \
 	--exclude '*.fix' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov
+	egorov@${bl_dev}:/home/egorov
 }
 
 function va-ts-rsync {
@@ -272,7 +275,7 @@ function va-ts-rsync {
 	/mnt/d/vm/debian/github.com/video-audio/va-ts \
 	--exclude '.git' \
 	--exclude 'target' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov
+	egorov@${bl_dev}:/home/egorov
 }
 
 function va-tool-rsync {
@@ -282,7 +285,7 @@ function va-tool-rsync {
 	/mnt/d/vm/debian/github.com/video-audio/va-tool \
 	--exclude '.git' \
 	--exclude 'target' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov
+	egorov@${bl_dev}:/home/egorov
 }
 
 function va-dumps-rsync {
@@ -291,7 +294,7 @@ function va-dumps-rsync {
 	-e "ssh -p 2222" \
 	/mnt/d/vm/debian/github.com/video-audio/va-dumps \
 	--exclude '.git' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov
+	egorov@${bl_dev}:/home/egorov
 }
 
 function video-audio-rsync {
@@ -301,7 +304,7 @@ function video-audio-rsync {
 	/mnt/d/vm/debian/github.com/video-audio \
 	--exclude '.git' \
 	--exclude 'target' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov
+	egorov@${bl_dev}:/home/egorov
 }
 
 function bbl-limbo-webrtc-rsync {
@@ -313,7 +316,7 @@ function bbl-limbo-webrtc-rsync {
 	--exclude '.git' \
 	--exclude 'node_modules' \
 	--exclude 'yarn.lock' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov/limbo-webrtc/
+	egorov@${bl_dev}:/home/egorov/limbo-webrtc/
 }
 alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
@@ -325,9 +328,9 @@ function bbl-transcoder-ctl-rsync {
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
 	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
-	/mnt/d/vm/debian/gl-ce.int/transcoder/ctl \
+	/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/ctl \
 	--exclude '.git' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/
+	egorov@${bl_dev}:/home/egorov/transcoder/
 }
 alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
 
@@ -339,12 +342,12 @@ function bbl-transcoder-ui-rsync {
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
 	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
-	/mnt/d/vm/debian/gl-ce.int/transcoder/ui \
+	/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/ui \
 	--exclude '.git' \
 	--exclude 'node_modules' \
 	--exclude 'bower_components' \
 	--exclude 'tmp' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov/transcoder/
+	egorov@${bl_dev}:/home/egorov/transcoder/
 }
 alias transcoder-ui-rsync="bbl-transcoder-ui-rsync"
 
@@ -357,7 +360,7 @@ function go-x-pkg-rsync {
 	--exclude '.git' \
 	--exclude 'node_modules' \
 	--exclude 'yarn.lock' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov/go-x-pkg/
+	egorov@${bl_dev}:/home/egorov/go-x-pkg/
 }
 
 function bbl-rm-hack-rsync {
@@ -367,9 +370,29 @@ function bbl-rm-hack-rsync {
 	--rsync-path="mkdir -p /home/egorov/rm/hack/ && rsync" \
 	/mnt/d/vm/debian/gl.bradburylab.tv/rm/hack/ \
 	--exclude '.git' \
-	egorov@bl-dev-gpu-trans01.int:/home/egorov/rm/hack/
+	egorov@${bl_dev}:/home/egorov/rm/hack/
 }
 alias bbl-redmine-hack-rsync="bbl-rm-hack-rsync"
+
+function solos-glagol-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/solos-glagol/ && rsync" \
+	/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/solos-glagol/ \
+	--exclude '.git' \
+	egorov@172.16.101.211:/home/egorov/solos-glagol/
+}
+
+function gist-github-com-vany-egorov-algo-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/gist.github.com/vany-egorov/algo/ && rsync" \
+	/mnt/d/vm/debian/gist.github.com/vany-egorov/algo/ \
+	--exclude '.git' \
+	egorov@${bl_dev}:/home/egorov/gist.github.com/vany-egorov/algo/
+}
 
 function git-lg-fzf {
 	git lg |
@@ -417,7 +440,7 @@ PATH_REMOTE_GITHUB_COM="${PATH_REMOTE_PROJECTS}/github.com"
 PATH_REMOTE_GL_BRADBURYLAB_TV="${PATH_REMOTE_PROJECTS}/gl.bradburylab.tv"
 PATH_REMOTE_GL_CE_INT="${PATH_REMOTE_PROJECTS}/gl-ce.int"
 
-PATH_SANDBOX="${PATH_PROJECTS}/sandbox"
+PATH_SANDBOX="${PATH_GITHUB_COM}/vany-egorov/sandbox"
 PATH_LIBVA="${PATH_SANDBOX}/c-cpp/04-udp-mpegts"
 PATH_REMOTE_SANDBOX="${PATH_REMOTE_PROJECTS}/sandbox"
 PATH_REMOTE_LIBVA="${PATH_REMOTE_SANDBOX}/c-cpp/04-udp-mpegts"
@@ -462,7 +485,7 @@ alias cd-va-tool="cd ${PATH_VA_TOOL}"
 PATH_GO_X_PKG="${PATH_GITHUB_COM}/go-x-pkg"
 alias cd-go-x-pkg="cd ${PATH_GO_X_PKG}"
 
-PATH_TRANSCODER="${PATH_GL_CE_INT}/transcoder"
+PATH_TRANSCODER="${PATH_GL_BRADBURYLAB_TV}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
 PATH_TRANSCODER_UI="${PATH_TRANSCODER}/ui"
 PATH_TRANSCODER_CTL_2="${PATH_TRANSCODER}/ctl"
@@ -473,7 +496,7 @@ PATH_TRANSCODER_UI_DEB="${PATH_TRANSCODER}/ui-deb"
 PATH_TRANSCODER_TEST="${PATH_TRANSCODER}/test"
 PATH_TRANSCODER_DOCS="${PATH_TRANSCODER}/docs"
 PATH_REMOTE_TRANSCODER="${PATH_REMOTE_GL_BRADBURYLAB_TV}/transcoder"
-PATH_F451="${PATH_GL_CE_INT}/f451"
+PATH_F451="${PATH_GL_BRADBURYLAB_TV}/f451"
 function tmux-dev-transcoder {
 	local path_remote_ctl="${PATH_REMOTE_GL_CE_INT}/transcoder/ctl"
 
@@ -497,7 +520,7 @@ function tmux-dev-transcoder-failover {
 	tmux new-window                -n 'http-api-01'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'http-api-02'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'http-api-03'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'ctl-rsync'         "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
+	tmux new-window                -n 'ctl-rsync'         "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
 	tmux new-window                -n 'ctl-01'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'ctl-02'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'ctl-03'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
@@ -505,37 +528,37 @@ function tmux-dev-transcoder-failover {
 }
 
 function tmux-dev-transcoder-sentinel {
-	tmux new-session -s transcoder-sentinel -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
-	tmux new-window                -n 'build'             "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '01'                "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '02'                "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '03'                "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-sentinel -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
+	tmux new-window                -n 'build'             "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '01'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '02'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '03'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-api {
-	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
-	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-ctl {
-	tmux new-session -s transcoder-ctl -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
-	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-ctl -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-dash-cenc {
-	tmux new-session -s transcoder-dash-cenc -n 'rsync'        -d "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
-	tmux new-window                          -n 'wv-client'       "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                          -n 'wv-drm-proxy'    "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                          -n 'MP4Box'          "cd '${PATH_TRANSCODER_CTL_2}/src' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-dash-cenc -n 'rsync'        -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
+	tmux new-window                          -n 'wv-client'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                          -n 'wv-drm-proxy'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                          -n 'MP4Box'          "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -629,7 +652,7 @@ function env-f451 {
 	export PATH=${GOROOT}/bin:${PATH};
 }
 
-PATH_CAS="${PATH_GL_CE_INT}/cas/cas"
+PATH_CAS="${PATH_GL_BRADBURYLAB_TV}/cas/cas"
 function tmux-dev-cas {
 	tmux new-session -s cas -n rsync    -d "cd '${PATH_CAS}/src' && /bin/bash" &&
 	tmux new-window         -n build       "cd '${PATH_CAS}/src' && /bin/bash" &&
@@ -671,7 +694,7 @@ function tmux-dev-smpp-proxy() {
 alias cd-smpp-proxy="cd ${PATH_SMPP_PROXY}"
 alias cd-tele2-smpp-proxy="cd ${PATH_SMPP_PROXY}"
 
-PATH_MTS="${PATH_GL_CE_INT}/mts"
+PATH_MTS="${PATH_GL_BRADBURYLAB_TV}/mts"
 PATH_CDN_API="${PATH_MTS}/cdn-api"
 PATH_CDN_API_BIN_DEB="${PATH_MTS}/cdn-api-bin-deb"
 PATH_CDN_API_MIGRATE="${PATH_MTS}/cdn-api-migrate"
@@ -793,7 +816,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.14.1
+gvm use go1.14.2
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
