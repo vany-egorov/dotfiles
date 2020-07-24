@@ -124,10 +124,6 @@ export PS1="\[\033[38;5;113m\]\u \[\033[38;5;39m\]\w\[\033[0m\]\$(parse_git_bran
 #	export PS1="\[\033[0;32m\]\u \[\033[36m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
 # fi
 
-# https://www.mankier.com/1/exa
-# da = a file's date;
-# di = directories;
-export EXA_COLORS="da=38;5;253:di=38;5;253"
 alias ll='exa -abghl'
 alias la='ls -A'
 alias l='exa'
@@ -320,6 +316,19 @@ function bbl-limbo-webrtc-rsync {
 }
 alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
+function bbl-monitoring-hls-rsync {
+    rsync \
+	-avz --info=progress2 \
+	-e "ssh -p 2222" \
+	--rsync-path="mkdir -p /home/egorov/monitoring-hls/ && rsync" \
+	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/monitoring-hls/ \
+	--exclude '.git' \
+	--exclude 'node_modules' \
+	--exclude 'yarn.lock' \
+	egorov@${bl_dev}:/home/egorov/monitoring-hls/
+}
+alias monitoring-hls-rsync="bbl-monitoring-hls-rsync"
+
 # bl-dev-gpu-trans01.int
 # bl-dev-enc01
 # bl-dev-enc02
@@ -497,19 +506,11 @@ PATH_TRANSCODER_TEST="${PATH_TRANSCODER}/test"
 PATH_TRANSCODER_DOCS="${PATH_TRANSCODER}/docs"
 PATH_REMOTE_TRANSCODER="${PATH_REMOTE_GL_BRADBURYLAB_TV}/transcoder"
 PATH_F451="${PATH_GL_BRADBURYLAB_TV}/f451"
-function tmux-dev-transcoder {
-	local path_remote_ctl="${PATH_REMOTE_GL_CE_INT}/transcoder/ctl"
-
-	tmux new-session -s transcoder -n 'http-api-rsync' -d "cd '${PATH_TRANSCODER_HTTP_API}' && /bin/bash" &&
-	tmux new-window                -n 'http-api'          "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'ctl-rsync'         "cd '${PATH_TRANSCODER_CTL_2}/src' && /bin/bash" &&
-	tmux new-window                -n ctl                 "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'rsync-core'        "cd '${PATH_TRANSCODER_CORE}'  && /bin/bash" &&
-	tmux new-window                -n core                "cd '${PATH_TRANSCODER_CORE}'  && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n core                "cd '${PATH_TRANSCODER_CORE}'  && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	# tmux new-window                -n f451-rsync      "cd '${PATH_F451}/f451' && /bin/bash" &&
-	# tmux new-window                -n f451-make       "cd '${PATH_F451}/f451' && ssh -p 2222 bl-dev-gpu-trans01.int && /bin/bash" &&
-	# tmux new-window                -n f451-server     "cd '${PATH_F451}/f451' && ssh -p 2222 bl-dev-gpu-trans01.int && /bin/bash" &&
+function tmux-dev-transcoder-core {
+	tmux new-session -s transcoder-core -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE}' && /bin/bash" &&
+	tmux new-window                     -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -806,8 +807,8 @@ alias cd-redmine="cd ${PATH_RM_HACK}"
 alias cd-rm-hack="cd ${PATH_RM_HACK}"
 
 
-DEBEMAIL="vany.egorov@gmail.com"
-DEBFULLNAME="Ivan Egorov"
+export DEBEMAIL="vany.egorov@gmail.com"
+export DEBFULLNAME="Ivan Egorov"
 
 VIMRUNTIME=/usr/bin
 EDITOR=/usr/bin/vim
@@ -816,7 +817,8 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.14.2
+gvm use go1.14.6
+export GOPATH=${GOPATH}:~/dev;
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
