@@ -130,6 +130,7 @@ alias l='exa'
 alias cat='bat'
 
 bl_dev="bl-dev-enc01.int"
+bl_dev="bl-dev-enc02.int"
 bl_dev="bl-dev-gpu-trans01.int"
 
 function bbl-streamer-rsync {
@@ -564,9 +565,8 @@ function tmux-dev-transcoder-dash-cenc {
 }
 
 function tmux-dev-transcoder-ui {
-	tmux new-session -s transcoder-ui -n 'rsync'  -d "cd '${PATH_TRANSCODER_UI}' && /bin/bash" &&
-	tmux new-window                   -n 'grunt'     "cd '${PATH_TRANSCODER_UI}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                   -n 'conect'    "cd '${PATH_TRANSCODER_UI}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-ui -n 'rsync'                      -d "cd '${PATH_TRANSCODER_UI}' && /bin/bash" &&
+	tmux new-window                   -n 'docker-webpack-dev-server'     "cd '${PATH_TRANSCODER_UI}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -817,7 +817,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.14.6
+gvm use go1.15
 export GOPATH=${GOPATH}:~/dev;
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -833,3 +833,4 @@ export GOPATH=${GOPATH}:~/dev;
 
 # export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 # n 10.16.3
+export PATH="/home/egorov/git-fuzzy/bin:$PATH"

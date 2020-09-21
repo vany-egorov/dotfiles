@@ -1,10 +1,24 @@
 [user]
 	email = vany.egorov@gmail.com
 	name = Ivan Egorov
+
 [core]
 	editor = vim
+	pager = delta
+
 [color]
 	ui = true
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	features = decorations
+	whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+	file-style = bold yellow
+
 [alias]
 	lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
 	lgfzf = !git-lg-fzf
@@ -13,7 +27,3 @@
 	details = log -n1 -p --format=fuller
 	d = difftool
 	tags = !git for-each-ref --sort=-committerdate --format='%(color:131)%(refname:short)%(color:reset) %(color:113)(%(taggerdate))%(color:reset) - %(subject) %(body)' refs/tags
-[diff]
-	tool = vimdiff
-[difftool]
-	prompt = false
