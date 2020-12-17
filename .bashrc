@@ -176,6 +176,21 @@ function transcoder-ffmpeg-vanila-rsync {
 		egorov@${bl_dev}:/home/egorov
 }
 
+function transcoder-core-builder-rsync {
+	rsync \
+		-avz --info=progress2 \
+		-e "ssh -p 2222" \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/core-builder \
+		--exclude '.git' \
+		--exclude 'env/go' \
+		--exclude 'env/gopath' \
+		--exclude 'bin' \
+		--exclude 'log' \
+		--exclude '*.fix' \
+		--exclude 'tmp' \
+		egorov@${bl_dev}:/home/egorov/transcoder
+}
+
 function transcoder-transcoder-core-2-deb-rsync {
 	rsync \
 		-avz --info=progress2 \
@@ -500,6 +515,7 @@ PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
 PATH_TRANSCODER_UI="${PATH_TRANSCODER}/ui"
 PATH_TRANSCODER_CTL_2="${PATH_TRANSCODER}/ctl"
 PATH_TRANSCODER_CORE="${PATH_TRANSCODER}/bbl-streamer/bbl-streamer"
+PATH_TRANSCODER_CORE_BUILDER="${PATH_TRANSCODER}/core-builder"
 PATH_TRANSCODER_CTL_DEB="${PATH_TRANSCODER}/ctl-deb"
 PATH_TRANSCODER_HTTP_API_DEB="${PATH_TRANSCODER}/http-api-deb"
 PATH_TRANSCODER_UI_DEB="${PATH_TRANSCODER}/ui-deb"
@@ -512,6 +528,14 @@ function tmux-dev-transcoder-core {
 	tmux new-window                     -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux a
+}
+
+function tmux-dev-transcoder-core-builder {
+	tmux new-session -s transcoder-core-builder -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE_BUILDER}' && /bin/bash" &&
+	tmux new-window                             -n build      "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                             -n core       "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                             -n core       "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -817,7 +841,7 @@ source $HOME/.cargo/env
 export RUST_SRC_PATH=~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 [[ -s "/home/egorov/.gvm/scripts/gvm" ]] && source "/home/egorov/.gvm/scripts/gvm"
-gvm use go1.15
+gvm use go1.15.6
 export GOPATH=${GOPATH}:~/dev;
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
