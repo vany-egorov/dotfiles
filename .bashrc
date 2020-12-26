@@ -138,7 +138,6 @@ function bbl-streamer-rsync {
 		-avz --info=progress2 \
 		-e "ssh -p 2222" \
 		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/bbl-streamer/* \
-		--exclude '.git' \
 		--exclude 'env/go' \
 		--exclude 'env/gopath' \
 		--exclude 'bin' \
@@ -181,7 +180,20 @@ function transcoder-core-builder-rsync {
 		-avz --info=progress2 \
 		-e "ssh -p 2222" \
 		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/core-builder \
-		--exclude '.git' \
+		--exclude 'env/go' \
+		--exclude 'env/gopath' \
+		--exclude 'bin' \
+		--exclude 'log' \
+		--exclude '*.fix' \
+		--exclude 'tmp' \
+		egorov@${bl_dev}:/home/egorov/transcoder
+}
+
+function transcoder-nvidia-api-rsync {
+	rsync \
+		-avz --info=progress2 \
+		-e "ssh -p 2222" \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/nvidia-api \
 		--exclude 'env/go' \
 		--exclude 'env/gopath' \
 		--exclude 'bin' \
@@ -516,6 +528,7 @@ PATH_TRANSCODER_UI="${PATH_TRANSCODER}/ui"
 PATH_TRANSCODER_CTL_2="${PATH_TRANSCODER}/ctl"
 PATH_TRANSCODER_CORE="${PATH_TRANSCODER}/bbl-streamer/bbl-streamer"
 PATH_TRANSCODER_CORE_BUILDER="${PATH_TRANSCODER}/core-builder"
+PATH_TRANSCODER_NVIDIA_API="${PATH_TRANSCODER}/nvidia-api"
 PATH_TRANSCODER_CTL_DEB="${PATH_TRANSCODER}/ctl-deb"
 PATH_TRANSCODER_HTTP_API_DEB="${PATH_TRANSCODER}/http-api-deb"
 PATH_TRANSCODER_UI_DEB="${PATH_TRANSCODER}/ui-deb"
@@ -528,6 +541,14 @@ function tmux-dev-transcoder-core {
 	tmux new-window                     -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux a
+}
+
+function tmux-dev-transcoder-nvidia-api {
+	tmux new-session -s transcoder-nvidia-api -n 'rsync' -d "cd '${PATH_TRANSCODER_NVIDIA_API}' && /bin/bash" &&
+	tmux new-window                           -n build      "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
