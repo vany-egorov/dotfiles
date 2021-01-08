@@ -22,9 +22,9 @@ Plug 'scrooloose/nerdtree'
 " Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 Plug 'rust-lang/rust.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'moll/vim-bbye'
@@ -73,15 +73,6 @@ let g:airline#extensions#tabline#enabled = 1 " vim-airline
 let g:airline#extensions#tabline#fnamemod = ':t' " Name of buffer to only filename instead of path
 " let g:airline_theme='minimalist'
 let g:airline_powerline_fonts = 1
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-" let g:airline_left_sep = '»'
-" let g:airline_right_sep = '«'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.branch = 'B'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.whitespace = 'Ξ'
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
