@@ -133,11 +133,11 @@ bl_dev="bl-dev-enc01.int"
 bl_dev="bl-dev-enc02.int"
 bl_dev="bl-dev-gpu-trans01.int"
 
-function bbl-streamer-rsync {
+function transcoder-core-3.6.x-rsync {
 	rsync \
 		-avz --info=progress2 \
 		-e "ssh -p 2222" \
-		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/bbl-streamer/* \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/core-3.6.x \
 		--exclude 'env/go' \
 		--exclude 'env/gopath' \
 		--exclude 'bin' \
@@ -146,7 +146,39 @@ function bbl-streamer-rsync {
 		--exclude '*.ts' \
 		--exclude 'CudaSample' \
 		--exclude 'CudaSample-5.5' \
-		egorov@${bl_dev}:/home/egorov/transcoder/bbl-streamer
+		egorov@${bl_dev}:/home/egorov/transcoder
+}
+
+function transcoder-core-3.7.x-rsync {
+	rsync \
+		-avz --info=progress2 \
+		-e "ssh -p 2222" \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/core-3.7.x \
+		--exclude 'env/go' \
+		--exclude 'env/gopath' \
+		--exclude 'bin' \
+		--exclude 'log' \
+		--exclude '*.fix' \
+		--exclude '*.ts' \
+		--exclude 'CudaSample' \
+		--exclude 'CudaSample-5.5' \
+		egorov@${bl_dev}:/home/egorov/transcoder
+}
+
+function transcoder-core-3.8.x-rsync {
+	rsync \
+		-avz --info=progress2 \
+		-e "ssh -p 2222" \
+		/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/core-3.8.x \
+		--exclude 'env/go' \
+		--exclude 'env/gopath' \
+		--exclude 'bin' \
+		--exclude 'log' \
+		--exclude '*.fix' \
+		--exclude '*.ts' \
+		--exclude 'CudaSample' \
+		--exclude 'CudaSample-5.5' \
+		egorov@${bl_dev}:/home/egorov/transcoder
 }
 
 function gpac-rsync {
@@ -366,7 +398,6 @@ function bbl-transcoder-ctl-rsync {
 	-e "ssh -p 2222" \
 	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
 	/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/ctl \
-	--exclude '.git' \
 	egorov@${bl_dev}:/home/egorov/transcoder/
 }
 alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
@@ -526,7 +557,9 @@ PATH_TRANSCODER="${PATH_GL_BRADBURYLAB_TV}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
 PATH_TRANSCODER_UI="${PATH_TRANSCODER}/ui"
 PATH_TRANSCODER_CTL_2="${PATH_TRANSCODER}/ctl"
-PATH_TRANSCODER_CORE="${PATH_TRANSCODER}/bbl-streamer/bbl-streamer"
+PATH_TRANSCODER_CORE_36X="${PATH_TRANSCODER}/core-3.6.x"
+PATH_TRANSCODER_CORE_37X="${PATH_TRANSCODER}/core-3.7.x"
+PATH_TRANSCODER_CORE_38X="${PATH_TRANSCODER}/core-3.8.x"
 PATH_TRANSCODER_CORE_BUILDER="${PATH_TRANSCODER}/core-builder"
 PATH_TRANSCODER_NVIDIA_API="${PATH_TRANSCODER}/nvidia-api"
 PATH_TRANSCODER_CTL_DEB="${PATH_TRANSCODER}/ctl-deb"
@@ -536,11 +569,27 @@ PATH_TRANSCODER_TEST="${PATH_TRANSCODER}/test"
 PATH_TRANSCODER_DOCS="${PATH_TRANSCODER}/docs"
 PATH_REMOTE_TRANSCODER="${PATH_REMOTE_GL_BRADBURYLAB_TV}/transcoder"
 PATH_F451="${PATH_GL_BRADBURYLAB_TV}/f451"
-function tmux-dev-transcoder-core {
-	tmux new-session -s transcoder-core -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE}' && /bin/bash" &&
-	tmux new-window                     -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                     -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+function tmux-dev-transcoder-core-3.6.x {
+	tmux new-session -s transcoder-core-3.6.x -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE}' && /bin/bash" &&
+	tmux new-window                           -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux a
+}
+
+function tmux-dev-transcoder-core-3.7.x {
+	tmux new-session -s transcoder-core-3.7.x -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE}' && /bin/bash" &&
+	tmux new-window                           -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux a
+}
+
+function tmux-dev-transcoder-core-3.8.x {
+	tmux new-session -s transcoder-core-3.8.x -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE}' && /bin/bash" &&
+	tmux new-window                           -n build      "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_CORE}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -549,14 +598,6 @@ function tmux-dev-transcoder-nvidia-api {
 	tmux new-window                           -n build      "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                           -n core       "cd '${PATH_TRANSCODER_NVIDIA_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux a
-}
-
-function tmux-dev-transcoder-core-builder {
-	tmux new-session -s transcoder-core-builder -n 'rsync' -d "cd '${PATH_TRANSCODER_CORE_BUILDER}' && /bin/bash" &&
-	tmux new-window                             -n build      "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                             -n core       "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                             -n core       "cd '${PATH_TRANSCODER_CORE_BUILDER}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -632,7 +673,9 @@ alias cd-transcoder-ctl="cd ${PATH_TRANSCODER_CTL_2}"
 alias cd-bbl-transcoder-goctl="cd ${PATH_TRANSCODER_CTL_2}"
 alias cd-bbl-transcoder-bbl-streamer="cd ${PATH_TRANSCODER_CORE}"
 alias cd-bbl-transcoder-core="cd ${PATH_TRANSCODER_CORE}"
-alias cd-transcoder-core="cd ${PATH_TRANSCODER_CORE}"
+alias cd-transcoder-core-3.6.x="cd ${PATH_TRANSCODER_CORE_36X}"
+alias cd-transcoder-core-3.7.x="cd ${PATH_TRANSCODER_CORE_37X}"
+alias cd-transcoder-core-3.8.x="cd ${PATH_TRANSCODER_CORE_38X}"
 alias cd-bbl-transcoder-http-api-deb="cd ${PATH_TRANSCODER_HTTP_API_DEB}"
 alias cd-transcoder-http-api-deb="cd ${PATH_TRANSCODER_HTTP_API_DEB}"
 alias cd-bbl-transcoder-ui-deb="cd ${PATH_TRANSCODER_UI_DEB}"
@@ -866,6 +909,8 @@ gvm use go1.15.6
 export GOPATH=${GOPATH}:~/dev;
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# eval "$(starship init bash)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"

@@ -55,6 +55,8 @@ set encoding=UTF-8
 
 set textwidth=0
 
+set mouse=a
+
 colorscheme twilight256
 " autocmd BufEnter *.org colorscheme flattown
 
