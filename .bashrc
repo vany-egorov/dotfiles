@@ -114,15 +114,28 @@ alias ssh-vagrant='ssh vagrant'
 alias dch='VISUAL=vim dch'
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-parse_git_branch() {
-	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+
+parse_git_dirty () {
+  [[ $(git status 2> /dev/null | tail -1) != "nothing to commit, working tree clean" ]] && echo "*"
 }
 
-# if [[ "$TERM" =~ 256color ]]; then
-export PS1="\[\033[38;5;113m\]\u \[\033[38;5;39m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
-# else
-#	export PS1="\[\033[0;32m\]\u \[\033[36m\]\w\[\033[0m\]\$(parse_git_branch)\[\033[00m\] $ "
-# fi
+parse_git_branch () {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+show_git_prompt () {
+  git branch 2>/dev/null 1>&2 && echo -e "-(\e[34;1m $(parse_git_branch)\e[31;1m)"
+}
+
+if [[ -n $(type -t git) ]] ; then
+  PS1="\$(show_git_prompt)"
+else
+  PS1=
+fi
+
+PS1="
+\[\e[31;1m\]┌───=(\[\033[38;5;113m\]\u\[\e[31;1m\] :: \[\e[33;1m\]\h\[\e[31;1m\])-[\[\033[38;5;39m\]\w\[\e[31;1m\]]$PS1
+\[\e[31;1m\]└──( \[\e[0m\]"
 
 alias ll='exa -abghl'
 alias la='ls -A'
@@ -368,11 +381,10 @@ function bbl-limbo-webrtc-rsync {
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
 	--rsync-path="mkdir -p /home/egorov/limbo-webrtc/ && rsync" \
-	/mnt/d/vm/debian/gl.bradburylab.tv/limbo/webrtc/ \
-	--exclude '.git' \
 	--exclude 'node_modules' \
 	--exclude 'yarn.lock' \
-	egorov@${bl_dev}:/home/egorov/limbo-webrtc/
+	/mnt/d/home/egorov/gopath/src/gl.bradburylab.tv/limbo/webrtc/ \
+	egorov@${bl_dev}:/home/egorov/limbo-webrtc
 }
 alias limbo-webrtc-rsync="bbl-limbo-webrtc-rsync"
 
@@ -397,7 +409,7 @@ function bbl-transcoder-ctl-rsync {
 	-avz --info=progress2 \
 	-e "ssh -p 2222" \
 	--rsync-path="mkdir -p /home/egorov/transcoder/ && rsync" \
-	/mnt/d/vm/debian/gl.bradburylab.tv/transcoder/ctl \
+	/mnt/d/home/egorov/gopath/src/gl.bradburylab.tv/transcoder/ctl \
 	egorov@${bl_dev}:/home/egorov/transcoder/
 }
 alias transcoder-ctl-rsync="bbl-transcoder-ctl-rsync"
@@ -495,6 +507,7 @@ function git-checkout-t-fzf() {
 }
 
 PATH_PROJECTS="/mnt/d/vm/debian"
+PATH_GOPATH="/mnt/d/home/egorov/gopath"
 PATH_GITHUB_COM="${PATH_PROJECTS}/github.com"
 PATH_GL_BRADBURYLAB_TV="${PATH_PROJECTS}/gl.bradburylab.tv"
 PATH_GL_CE_INT="${PATH_PROJECTS}/gl-ce.int"
@@ -556,7 +569,7 @@ alias cd-go-x-pkg="cd ${PATH_GO_X_PKG}"
 PATH_TRANSCODER="${PATH_GL_BRADBURYLAB_TV}/transcoder"
 PATH_TRANSCODER_HTTP_API="${PATH_TRANSCODER}/http-api"
 PATH_TRANSCODER_UI="${PATH_TRANSCODER}/ui"
-PATH_TRANSCODER_CTL_2="${PATH_TRANSCODER}/ctl"
+PATH_TRANSCODER_CTL="${PATH_GOPATH}/src/gl.bradburylab.tv/transcoder/ctl"
 PATH_TRANSCODER_CORE_36X="${PATH_TRANSCODER}/core-3.6.x"
 PATH_TRANSCODER_CORE_37X="${PATH_TRANSCODER}/core-3.7.x"
 PATH_TRANSCODER_CORE_38X="${PATH_TRANSCODER}/core-3.8.x"
@@ -608,45 +621,45 @@ function tmux-dev-transcoder-failover {
 	tmux new-window                -n 'http-api-01'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'http-api-02'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux new-window                -n 'http-api-03'       "cd '${PATH_TRANSCODER_HTTP_API}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'ctl-rsync'         "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
-	tmux new-window                -n 'ctl-01'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'ctl-02'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n 'ctl-03'            "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n 'ctl-rsync'         "cd '${PATH_TRANSCODER_CTL}' && /bin/bash" &&
+	tmux new-window                -n 'ctl-01'            "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n 'ctl-02'            "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n 'ctl-03'            "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-sentinel {
-	tmux new-session -s transcoder-sentinel -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
-	tmux new-window                -n 'build'             "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '01'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '02'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                -n '03'                "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-sentinel -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL}' && /bin/bash" &&
+	tmux new-window                -n 'build'             "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '01'                "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '02'                "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                -n '03'                "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-api {
-	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
-	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-api -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL}' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-ctl {
-	tmux new-session -s transcoder-ctl -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
-	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-ctl -n 'rsync' -d "cd '${PATH_TRANSCODER_CTL}' && /bin/bash" &&
+	tmux new-window                    -n 'build'    "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '01'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '02'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                    -n '03'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
 function tmux-dev-transcoder-dash-cenc {
-	tmux new-session -s transcoder-dash-cenc -n 'rsync'        -d "cd '${PATH_TRANSCODER_CTL_2}' && /bin/bash" &&
-	tmux new-window                          -n 'wv-client'       "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                          -n 'wv-drm-proxy'    "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
-	tmux new-window                          -n 'MP4Box'          "cd '${PATH_TRANSCODER_CTL_2}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-session -s transcoder-dash-cenc -n 'rsync'        -d "cd '${PATH_TRANSCODER_CTL}' && /bin/bash" &&
+	tmux new-window                          -n 'wv-client'       "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                          -n 'wv-drm-proxy'    "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
+	tmux new-window                          -n 'MP4Box'          "cd '${PATH_TRANSCODER_CTL}' && ssh -p 2222 bl-dev-gpu-trans01.int; /bin/bash" &&
 	tmux a
 }
 
@@ -667,10 +680,9 @@ alias cd-bbl-transcoder-http-api="cd ${PATH_TRANSCODER_HTTP_API}"
 alias cd-transcoder-http-api="cd ${PATH_TRANSCODER_HTTP_API}"
 alias cd-bbl-transcoder-ui="cd ${PATH_TRANSCODER_UI}"
 alias cd-transcoder-ui="cd ${PATH_TRANSCODER_UI}"
-alias cd-bbl-transcoder-ctl-2="cd ${PATH_TRANSCODER_CTL_2}"
-alias cd-bbl-transcoder-ctl="cd ${PATH_TRANSCODER_CTL_2}"
-alias cd-transcoder-ctl="cd ${PATH_TRANSCODER_CTL_2}"
-alias cd-bbl-transcoder-goctl="cd ${PATH_TRANSCODER_CTL_2}"
+alias cd-bbl-transcoder-ctl="cd ${PATH_TRANSCODER_CTL}"
+alias cd-transcoder-ctl="cd ${PATH_TRANSCODER_CTL}"
+alias cd-bbl-transcoder-goctl="cd ${PATH_TRANSCODER_CTL}"
 alias cd-bbl-transcoder-bbl-streamer="cd ${PATH_TRANSCODER_CORE}"
 alias cd-bbl-transcoder-core="cd ${PATH_TRANSCODER_CORE}"
 alias cd-transcoder-core-3.6.x="cd ${PATH_TRANSCODER_CORE_36X}"
@@ -873,7 +885,7 @@ function tmux-dev-socket-server() {
 }
 alias cd-socket-server="cd ${PATH_SOCKET_SERVER}"
 
-PATH_LIMBO_WEBRTC="${PATH_GL_BRADBURYLAB_TV}/limbo/webrtc"
+PATH_LIMBO_WEBRTC="${PATH_GOPATH}/src/gl.bradburylab.tv/limbo/webrtc"
 function tmux-dev-limbo-webrtc() {
 	tmux new-session -s limbo-webrtc -n "rsync" -d "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
 	tmux new-window                  -n "build"    "cd '${PATH_LIMBO_WEBRTC}'; /bin/bash" &&
