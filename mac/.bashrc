@@ -5,6 +5,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export GOPATH="$HOME/code/gopath"
 
 export PATH="$PATH:$HOME/code/gopath/bin"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
@@ -18,8 +19,8 @@ alias cat='bat'
 
 function git-lg-fzf {
   git lg |
-      fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
-          --bind "ctrl-m:execute:
+    fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
+      --bind "ctrl-m:execute:
               echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
               xargs -I % sh -c 'git show --color=always % | less -R'"
 }
@@ -71,6 +72,34 @@ PS1="\[\e[31;1m\]┌───=(\[\033[38;5;113m\]\u\[\e[31;1m\] :: \[\e[33;1m\]\
 \[\e[31;1m\]└──( \[\e[0m\]"
 
 
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+# Eternal bash history.
+# ---------------------
+# Undocumented feature which sets the size to "unlimited".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=100000
+export HISTTIMEFORMAT="[%F %T] "
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history
+
+# Force prompt to write history after every command.
+# http://superuser.com/questions/20900/bash-history-loss
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+shopt -s histappend
+stophistory () {
+  PROMPT_COMMAND="bash_prompt_command"
+  echo 'History recording stopped. Make sure to `kill -9 $$` at the end of the session.'
+}
+
+path_bashrc_d=~/.bashrc.d
+if [ -d $path_bashrc_d ]; then
+  for f in $path_bashrc_d/*.sh
+  do
+    test -x $f && source $f
+  done
+fi
