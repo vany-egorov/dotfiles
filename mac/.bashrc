@@ -6,8 +6,9 @@ export GOPATH="$HOME/code/gopath"
 
 export PATH="$PATH:$HOME/code/gopath/bin"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 
-export LC_ALL=en_US.UTF-8  
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 
@@ -15,6 +16,10 @@ alias ll='exa -abghl'
 alias la='ls -A'
 alias l='exa'
 alias cat='bat'
+
+
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
 
 
 function git-lg-fzf {
@@ -75,6 +80,10 @@ PS1="\[\e[31;1m\]┌───=(\[\033[38;5;113m\]\u\[\e[31;1m\] :: \[\e[33;1m\]\
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
+
+[ -s ~/.sdkman/bin/sdkman-init.sh ] && source ~/.sdkman/bin/sdkman-init.sh
 
 # Eternal bash history.
 # ---------------------
