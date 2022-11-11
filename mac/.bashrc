@@ -7,6 +7,8 @@ export GOPATH="$HOME/code/gopath"
 export PATH="$PATH:$HOME/code/gopath/bin"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+export PATH="/Users/$USER/.cargo/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -83,7 +85,11 @@ PS1="\[\e[31;1m\]┌───=(\[\033[38;5;113m\]\u\[\e[31;1m\] :: \[\e[33;1m\]\
 
 [ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
 
-[ -s ~/.sdkman/bin/sdkman-init.sh ] && source ~/.sdkman/bin/sdkman-init.sh
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+. "$HOME/.cargo/env"
 
 # Eternal bash history.
 # ---------------------
@@ -112,3 +118,5 @@ if [ -d $path_bashrc_d ]; then
     test -x $f && source $f
   done
 fi
+
+export TERM=screen-256color
