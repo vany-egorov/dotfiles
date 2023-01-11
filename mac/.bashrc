@@ -8,6 +8,7 @@ export PATH="$PATH:$HOME/code/gopath/bin"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/Users/$USER/.cargo/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
